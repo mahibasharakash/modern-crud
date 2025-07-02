@@ -1,144 +1,218 @@
 <template>
 
-    <div class="w-full max-w-[1024px] mx-auto py-5">
+    <div class="w-full px-10 mx-auto py-5">
 
         <!-- header -->
-        <div class="w-full flex justify-between items-center mb-4">
-            <div class="text-[25px] font-bold">
+        <div class="w-full flex justify-between items-center mb-5">
+            <div class="text-[21px] font-bold">
                 Crud
             </div>
             <div class="flex justify-end gap-2">
-                <input type="text" name="search" v-model="search" @input="searchData()" class="w-full min-w-[180px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3 appearance-none" required autocomplete="off" placeholder="Search Here" />
-                <select name="sort_by" v-model="sort_by" @change="sortChange()" class="w-full min-w-[180px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3 appearance-none">
-                    <option :value="''"> Select Sort Column </option>
-                    <option :value="'name'"> Name </option>
-                    <option :value="'email'"> Email </option>
-                    <option :value="'phone_number'"> Phone Number </option>
-                </select>
-                <select name="sort_order" v-model="sort_order" @change="sortChange()" class="w-full min-w-[180px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3 appearance-none">
-                    <option value="asc"> Ascending </option>
-                    <option value="desc"> Descending </option>
-                </select>
+                <input type="text" name="search" v-model="search" @input="searchData()" class="w-full text-[14px] min-w-[210px] max-w-[210px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 appearance-none" required autocomplete="off" placeholder="Search Here" />
+                <div class="relative min-w-[90px] max-w-[90px]">
+                    <select name="limit" v-model="perPage" @change="limitChange()" class="w-full text-[14px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
+                        <option v-for="n in limits" :key="n" :value="n"> {{ n }} </option>
+                    </select>
+                    <div class="absolute end-0 top-0 bottom-0 pe-4 flex justify-end items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" class="stroke-gray-700 min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="relative min-w-[210px] max-w-[210px]">
+                    <select name="sort_by" v-model="sort_by" @change="sortChange()" class="w-full text-[14px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
+                        <option :value="''"> Select Sort Column </option>
+                        <option :value="'name'"> Name </option>
+                        <option :value="'email'"> Email </option>
+                        <option :value="'phone_number'"> Phone Number </option>
+                    </select>
+                    <div class="absolute end-0 top-0 bottom-0 pe-4 flex justify-end items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" class="stroke-gray-700 min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="relative min-w-[210px] max-w-[210px]">
+                    <select name="archived" v-model="archived" @change="sortChange()" class="w-full text-[14px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
+                        <option :value="0"> Normal List </option>
+                        <option :value="1"> Archive List </option>
+                    </select>
+                    <div class="absolute end-0 top-0 bottom-0 pe-4 flex justify-end items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" class="stroke-gray-700 min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="relative min-w-[210px] max-w-[210px]">
+                    <select name="sort_order" v-model="sort_order" @change="sortChange()" class="w-full text-[14px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
+                        <option value="asc"> Ascending </option>
+                        <option value="desc"> Descending </option>
+                    </select>
+                    <div class="absolute end-0 top-0 bottom-0 pe-4 flex justify-end items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" class="stroke-gray-700 min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </div>
+                </div>
+                <button type="button" class="bg-red-400 text-white outline-0 border-0 px-7 cursor-pointer py-2 inline-block rounded-lg text-white" @click="openTruncateModal()">
+                    <span class="text-[14px]"> Clear </span>
+                </button>
                 <button type="button" class="bg-gray-700 text-white outline-0 border-0 px-7 cursor-pointer py-2 inline-block rounded-lg" @click="openManageModal(null)">
-                    Create
+                    <span class="text-[14px]"> Create </span>
                 </button>
             </div>
         </div>
 
         <div class="w-full block">
 
-            <!-- body -->
-            <table class="table-auto w-full text-[14px]">
-                <thead class="bg-gray-300">
-                <tr>
-                    <th class="px-4 py-2 text-start font-medium">
-                        Name
-                    </th>
-                    <th class="px-4 py-2 text-start font-medium">
-                        Email
-                    </th>
-                    <th class="px-4 py-2 text-start font-medium">
-                        Phone Number
-                    </th>
-                    <th class="px-4 py-2 text-end font-medium">
-                        Action
-                    </th>
-                </tr>
-                </thead>
-                <tbody class="bg-gray-200">
-                <tr v-for="each in tableData" :key="each.id">
-                    <td class="px-4 py-2 text-start font-normal">
-                        <div class="inline-flex justify-start items-center">
-                            <div v-if="!each.image" class="min-w-[35px] bg-gray-300 rounded-full text-[8px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center">
-                                {{shortName(each.name)}}
-                            </div>
-                            <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] object-cover bg-cover rounded-full" alt="image" />
-                            <span class="ms-3"> {{ each.name }} </span>
-                        </div>
-                    </td>
-                    <td class="px-4 py-2 text-start font-normal">
-                        {{ each.email }}
-                    </td>
-                    <td class="px-4 py-2 text-start font-normal">
-                        {{ each.phone_number }}
-                    </td>
-                    <td class="px-4 py-2 text-start font-normal">
-                        <div class="flex justify-end items-center gap-2">
-                            <button type="button" class="min-w-[35px] max-w-[35px] min-h-[35px] max-h-[35px] bg-gray-300 inline-flex justify-center items-center rounded-full cursor-pointer" @click="openManageModal(each.id)">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-gray-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
-                                </svg>
-                            </button>
-                            <button type="button" class="min-w-[35px] max-w-[35px] min-h-[35px] max-h-[35px] bg-rose-200 inline-flex justify-center items-center rounded-full cursor-pointer" @click="openDeleteModal(each.id)">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr v-if="tableData.length === 0">
-                    <td colspan="4">
-                        <div class="w-full text-center py-4 text-gray-600 font-semibold flex justify-center items-center min-h-[450px]">
-                            No records found.
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <template  v-if="!loading & tableData.length > 0">
+                <div class="w-full max-h-[calc(100vh-250px)] min-h-[calc(100vh-250px)] overflow-y-auto pe-2">
+                    <table class="table-auto w-full text-[14px]">
+                        <thead>
+                            <tr>
+                                <th class="font-medium" colspan="4">
+                                    <div class="flex justify-start items-center">
+                                        <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-s-xl bg-gray-100 min-w-1/4">
+                                            Name
+                                        </div>
+                                        <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-0 bg-gray-100 min-w-1/4">
+                                            Email
+                                        </div>
+                                        <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-0 bg-gray-100 min-w-1/4">
+                                            Phone Number
+                                        </div>
+                                        <div class="px-5 max-h-[70px] min-h-[70px] flex justify-end items-center rounded-e-xl bg-gray-100 min-w-1/4">
+                                            Action
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(each, index) in tableData" :key="each.id">
+                                <td class="font-medium" colspan="4">
+                                    <div class="flex justify-start items-center mt-2">
+                                        <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-s-xl bg-gray-100 min-w-1/4">
+                                            <div class="inline-flex justify-start items-center">
+                                                <div v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
+                                                    {{shortName(each.name)}}
+                                                </div>
+                                                <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] object-cover bg-cover rounded-full" alt="image" />
+                                                <span class="ms-3"> {{ each.name }} </span>
+                                            </div>
+                                        </div>
+                                        <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-0 bg-gray-100 min-w-1/4">
+                                            {{ each.email }}
+                                        </div>
+                                        <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-0 bg-gray-100 min-w-1/4">
+                                            {{ each.phone_number }}
+                                        </div>
+                                        <div class="px-5 flex justify-end items-center max-h-[70px] min-h-[70px] rounded-e-xl bg-gray-100 min-w-1/4">
+                                            <div class="relative">
+                                                <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] bg-gray-200 duration-500 hover:bg-gray-900 group inline-flex justify-center items-center rounded-full cursor-pointer" @click.stop="toggleDropdown(index)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-gray-600 duration-500 group-hover:stroke-white min-w-[18px] max-w-[18px] min-h-[18px] max-h-[18px]">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                                                    </svg>
+                                                </button>
+                                                <div class="absolute top-auto end-0 bg-gray-200 rounded-xl z-3 min-w-[150px] overflow-hidden" :class="{ 'max-h-[0]' : !isDropdownActive(index), 'max-h-[300px]' : isDropdownActive(index) }">
+                                                    <ul class="p-2">
+                                                        <li>
+                                                            <button type="button" v-if="archived === 1" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openUnArchiveModal(each.id)">
+                                                                UnArchive
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openArchiveModal(each.id)">
+                                                                Archive
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openManageModal(each.id)">
+                                                                Edit
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openDeleteModal(each.id)">
+                                                                Delete
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
 
-            <!-- footer -->
-            <div v-if="tableData.length > 0" class="w-full flex justify-between gap-3 mt-5">
-                <div class="flex justify-center items-center gap-2">
-                    <button type="button" class="cursor-pointer min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :disabled="currentPage <= 1" @click="goPrevious()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
-                        </svg>
-                    </button>
-                    <template v-if="pageCount <= 4">
-                        <button v-for="page in pageCount" :key="page" type="button" class="cursor-pointer min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
-                            {{ page }}
+            <template v-if="!loading & tableData.length > 0">
+                <div class="w-full flex justify-between gap-3 mt-5">
+                    <div class="flex justify-center items-center gap-2">
+                        <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :disabled="currentPage <= 1" @click="goPrevious()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
+                            </svg>
                         </button>
-                    </template>
-                    <template v-else>
-                        <button type="button" :key="1" class="cursor-pointer min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center rounded-full outline-0" :class="1 === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(1)">
-                            1
-                        </button>
-                        <template v-if="currentPage <= 3">
-                            <button v-for="page in [2,3]" :key="page" type="button" class="cursor-pointer min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
-                                {{ page }}
-                            </button>
-                            <span class="px-2">…</span>
-                        </template>
-                        <template v-else-if="currentPage >= pageCount - 2">
-                            <span class="px-2">…</span>
-                            <button v-for="page in [pageCount - 2, pageCount - 1]" :key="page" type="button" class="cursor-pointer min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
+                        <template v-if="pageCount <= 4">
+                            <button v-for="page in pageCount" :key="page" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
                                 {{ page }}
                             </button>
                         </template>
                         <template v-else>
-                            <span class="px-2">…</span>
-                            <button :key="currentPage - 1" type="button" class="cursor-pointer min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center rounded-full outline-0" :class="(currentPage - 1) === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(currentPage - 1)">
-                                {{ currentPage - 1 }}
+                            <button type="button" :key="1" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="1 === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(1)">
+                                1
                             </button>
-                            <button :key="currentPage" type="button" class="cursor-pointer min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center rounded-full outline-0" :class="currentPage === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(currentPage)">
-                                {{ currentPage }}
+                            <template v-if="currentPage <= 3">
+                                <button v-for="page in [2,3]" :key="page" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
+                                    {{ page }}
+                                </button>
+                                <span class="px-2">…</span>
+                            </template>
+                            <template v-else-if="currentPage >= pageCount - 2">
+                                <span class="px-2">…</span>
+                                <button v-for="page in [pageCount - 2, pageCount - 1]" :key="page" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
+                                    {{ page }}
+                                </button>
+                            </template>
+                            <template v-else>
+                                <span class="px-2">…</span>
+                                <button :key="currentPage - 1" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="(currentPage - 1) === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(currentPage - 1)">
+                                    {{ currentPage - 1 }}
+                                </button>
+                                <button :key="currentPage" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="currentPage === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(currentPage)">
+                                    {{ currentPage }}
+                                </button>
+                                <span class="px-2">…</span>
+                            </template>
+                            <button :key="pageCount" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="pageCount === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(pageCount)">
+                                {{ pageCount }}
                             </button>
-                            <span class="px-2">…</span>
                         </template>
-                        <button :key="pageCount" type="button" class="cursor-pointer min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center rounded-full outline-0" :class="pageCount === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(pageCount)">
-                            {{ pageCount }}
+                        <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :disabled="currentPage >= pageCount" @click="goNext()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                 stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+                            </svg>
                         </button>
-                    </template>
-                    <button type="button" class="cursor-pointer min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :disabled="currentPage >= pageCount" @click="goNext()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                             stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
-                        </svg>
-                    </button>
+                    </div>
+                    <div> {{ from }} – {{ to }} of {{ total }} </div>
                 </div>
-                <div> {{ from }} – {{ to }} of {{ total }} </div>
+            </template>
+
+            <div v-if="!loading & tableData.length === 0">
+                <div class="w-full min-h-[calc(100vh-250px)] bg-gray-100 rounded-xl text-gray-600 font-semibold flex justify-center items-center">
+                    No records found.
+                </div>
             </div>
+
+            <template v-if="loading">
+                <div class="w-full min-h-[calc(100vh-250px)] bg-gray-100 rounded-xl text-gray-600 font-semibold flex justify-center items-center">
+                    <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-green-800 border-t-transparent animate-spin"></span>
+                </div>
+            </template>
 
         </div>
 
@@ -168,7 +242,7 @@
                     <div class="relative" v-if="attach_preview">
                         <img :src="attach_preview" class="min-w-[190px] max-w-[190px] min-h-[190px] max-h-[190px] rounded-full cursor-pointer bg-gray-200 duration-500 hover:bg-gray-300 max-h-[250px] object-cover bg-cover" alt="uploaded-image"/>
                         <div class="absolute inset-0 w-full h-full flex justify-center items-center bg-white/25">
-                            <button type="button" class="min-w-[35px] max-w-[35px] min-h-[35px] max-h-[35px] bg-rose-200 inline-flex justify-center items-center rounded-full cursor-pointer" @click="removeFile()">
+                            <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] bg-rose-200 inline-flex justify-center items-center rounded-full cursor-pointer" @click="removeFile()">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                                 </svg>
@@ -193,12 +267,15 @@
                 </div>
             </div>
             <div class="flex justify-end items-center gap-3">
-                <button type="button" class="bg-gray-200 duration-500 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeManageModal()">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeManageModal()">
                     Cancel
                 </button>
-                <button type="submit" class="bg-gray-200 duration-500 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer">
+                <button type="submit" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!manageLoading">
                     <template v-if="!formData.id"> Save</template>
                     <template v-if="formData.id"> Update</template>
+                </button>
+                <button type="button" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="manageLoading">
+                    <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-green-800 border-t-transparent animate-spin"></span>
                 </button>
             </div>
         </form>
@@ -208,17 +285,89 @@
     <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isDeleteModalActive, 'visible bg-black/65' : isDeleteModalActive }" @click="closeDeleteModal()">
         <form @submit.prevent="deleteApi()" class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isDeleteModalActive, '-translate-y-1/2 opacity-0' : !isDeleteModalActive }" @click.stop>
             <div class="w-full flex justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[65px] max-w-[65px] min-h-[65px] max-h-[65px]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px]">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                 </svg>
             </div>
-            <div class="text-center text-[21px] my-4"> Are you sure?</div>
+            <div class="text-center text-[18px] my-5"> Are you Permanent <br> Delete surely? </div>
             <div class="w-full flex justify-center items-center gap-3">
-                <button type="button" class="bg-gray-200 duration-500 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[110px] max-w-[110px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeDeleteModal()">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeDeleteModal()">
                     Cancel
                 </button>
-                <button type="submit" class="bg-rose-200 duration-500 hover:bg-rose-300 text-rose-600 min-h-[45px] max-h-[45px] min-w-[110px] max-w-[110px] rounded-xl text-[12px] font-medium cursor-pointer">
+                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!deleteLoading">
                     Confirm
+                </button>
+                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="deleteLoading">
+                    <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-red-800 border-t-transparent animate-spin"></span>
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- archive modal -->
+    <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isArchiveModalActive, 'visible bg-black/65' : isArchiveModalActive }" @click="closeArchiveModal()">
+        <form @submit.prevent="archiveApi()" class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isArchiveModalActive, '-translate-y-1/2 opacity-0' : !isArchiveModalActive }" @click.stop>
+            <div class="w-full flex justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px]">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                </svg>
+            </div>
+            <div class="text-center text-[18px] my-5"> Are you <br> archive surely?</div>
+            <div class="w-full flex justify-center items-center gap-3">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeArchiveModal()">
+                    Cancel
+                </button>
+                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!archiveLoading">
+                    Confirm
+                </button>
+                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="archiveLoading">
+                    <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-red-800 border-t-transparent animate-spin"></span>
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- unArchive modal -->
+    <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isUnArchiveModalActive, 'visible bg-black/65' : isUnArchiveModalActive }" @click="closeUnArchiveModal()">
+        <form @submit.prevent="unArchiveApi()" class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isUnArchiveModalActive, '-translate-y-1/2 opacity-0' : !isUnArchiveModalActive }" @click.stop>
+            <div class="w-full flex justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px]">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                </svg>
+            </div>
+            <div class="text-center text-[18px] my-5"> Are you <br> unArchive surely?</div>
+            <div class="w-full flex justify-center items-center gap-3">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeUnArchiveModal()">
+                    Cancel
+                </button>
+                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!unArchiveLoading">
+                    Confirm
+                </button>
+                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="unArchiveLoading">
+                    <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-red-800 border-t-transparent animate-spin"></span>
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- truncate modal -->
+    <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isTruncateModalActive, 'visible bg-black/65' : isTruncateModalActive }" @click="closeTruncateModal()">
+        <form @submit.prevent="truncateApi()" class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isTruncateModalActive, '-translate-y-1/2 opacity-0' : !isTruncateModalActive }" @click.stop>
+            <div class="w-full flex justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px]">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                </svg>
+            </div>
+            <div class="text-center text-[18px] my-5"> Are you <br> clear all data surely?</div>
+            <div class="w-full flex justify-center items-center gap-3">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeTruncateModal()">
+                    Cancel
+                </button>
+                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!truncateLoading">
+                    Confirm
+                </button>
+                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="truncateLoading">
+                    <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-red-800 border-t-transparent animate-spin"></span>
                 </button>
             </div>
         </form>
@@ -237,9 +386,15 @@ export default {
         return {
             isManageModalActive: false,
             isDeleteModalActive: false,
+            isArchiveModalActive: false,
+            isTruncateModalActive: false,
+            isUnArchiveModalActive: false,
             manageLoading: false,
             deleteLoading: false,
+            archiveLoading: false,
+            truncateLoading: false,
             singleLoading: false,
+            unArchiveLoading: false,
             loading: false,
             formData: {
                 id: null,
@@ -250,21 +405,30 @@ export default {
             },
             tableData: [],
             currentPage: 1,
-            perPage: 10,
+            perPage: 20,
+            limits: Array.from({ length: 10 }, (_, i) => (i + 1) * 20),
             total: 0,
             pageCount: 0,
             from: 0,
             to: 0,
+            archived: 0,
             sort_order: 'asc',
             sort_by: '',
             search: null,
             searchTimeout: null,
             error: {},
             attach_preview: null,
+            activeDropdownIndex: null,
         }
     },
     async mounted() {
         await this.readApi(1);
+    },
+    beforeMount() {
+        window.addEventListener("click", this.handleClickOutside);
+    },
+    beforeUnmount() {
+        window.removeEventListener("click", this.handleClickOutside);
     },
     methods: {
 
@@ -305,6 +469,38 @@ export default {
             this.formData.remove_image = false;
         },
 
+        /*** open delete modal ***/
+        openArchiveModal(data) {
+            this.formData.id = data
+            this.isArchiveModalActive = true;
+        },
+
+        /*** close delete modal ***/
+        closeArchiveModal() {
+            this.isArchiveModalActive = false;
+        },
+
+        /*** open delete modal ***/
+        openTruncateModal() {
+            this.isTruncateModalActive = true;
+        },
+
+        /*** close delete modal ***/
+        closeTruncateModal() {
+            this.isTruncateModalActive = false;
+        },
+
+        /*** open delete modal ***/
+        openUnArchiveModal(data) {
+            this.formData.id = data
+            this.isUnArchiveModalActive = true;
+        },
+
+        /*** close delete modal ***/
+        closeUnArchiveModal() {
+            this.isUnArchiveModalActive = false;
+        },
+
         /*** attach file ***/
         attachFile(event) {
             const file = event.target.files[0];
@@ -342,11 +538,41 @@ export default {
             }
         },
 
+        /*** toggle dropdown as active dropdown index ***/
+        toggleDropdown(index) {
+            this.activeDropdownIndex = this.activeDropdownIndex === index ? null : index;
+        },
+
+        /*** is dropdown active dropdown index ***/
+        isDropdownActive(index) {
+            return this.activeDropdownIndex === index;
+        },
+
+        /*** handle click outside ***/
+        handleClickOutside(event) {
+            if (this.activeDropdownIndex !== null) {
+                this.activeDropdownIndex = null;
+            }
+        },
+
         /*** read api ***/
         async readApi(page = 1) {
             try {
                 this.loading = true;
-                const response = await axios.get(`${apiRoute.crud}`, { params: { page, per_page: this.perPage, sort_by: this.sort_by, sort_order: this.sort_order, search: this.search || ''}, headers: apiService.headerContent });
+                const response = await axios.get(`${apiRoute.crud}`,
+                    {
+                        params:
+                            {
+                                page,
+                                per_page: this.perPage,
+                                sort_by: this.sort_by,
+                                sort_order: this.sort_order,
+                                search: this.search || '',
+                                archived: this.archived,
+                            },
+                        headers: apiService.headerContent
+                    }
+                );
                 const res = response.data;
                 this.tableData = res.data;
                 this.currentPage = Number(res.current_page);
@@ -365,13 +591,14 @@ export default {
         /*** short name ***/
         shortName(name) {
             if (name) {
-                let fullName = name;
-                let words = fullName.split(' ');
+                const words = name.trim().split(/\s+/);
                 let initials = '';
-                words.forEach(word => {
-                    initials += word.charAt(0).toUpperCase();
-                });
-                return initials;
+                if (words.length >= 2) {
+                    initials = words[0][0] + words[1][0];
+                } else {
+                    initials = words[0].substring(0, 2);
+                }
+                return initials.toUpperCase();
             }
         },
 
@@ -410,6 +637,16 @@ export default {
             }, 500);
         },
 
+        /*** custom limit if apply read api ***/
+        limitChange() {
+            if (this.searchTimeout) {
+                clearTimeout(this.searchTimeout);
+            }
+            this.searchTimeout = setTimeout(() => {
+                this.readApi(1);
+            }, 500);
+        },
+
         /*** single api ***/
         async singleApi(data) {
             try {
@@ -436,12 +673,8 @@ export default {
                 form.append('name', this.formData.name);
                 form.append('email', this.formData.email);
                 form.append('phone_number', this.formData.phone_number);
-                if (this.formData.image instanceof File) {
-                    form.append('image', this.formData.image);
-                }
-                if (this.formData.remove_image) {
-                    form.append('remove_image', '1');
-                }
+                if (this.formData.image instanceof File) { form.append('image', this.formData.image); }
+                if (this.formData.remove_image) { form.append('remove_image', '1'); }
                 form.append('_method', 'PUT');
                 const response = await axios.post(apiRoute.crud + '/' + this.formData.id, form, {headers: apiService.mediaHeaderContent});
                 this.closeManageModal();
@@ -464,6 +697,49 @@ export default {
                 this.error = error?.response?.data?.errors;
             } finally {
                 this.deleteLoading = false;
+            }
+        },
+
+        /*** archive api ***/
+        async archiveApi() {
+            try {
+                this.archiveLoading = true;
+                const response = await axios.post(apiRoute.crud + '/' + this.formData.id + '/archive', null, { headers: apiService.headerContent });
+                this.closeArchiveModal();
+                await this.readApi();
+            } catch (error) {
+                this.error = error?.response?.data?.errors;
+            } finally {
+                this.archiveLoading = false;
+            }
+        },
+
+        /*** archive api ***/
+        async unArchiveApi() {
+            try {
+                this.unArchiveLoading = true;
+                await axios.post(apiRoute.crud + '/' + this.formData.id + '/unArchive', null, {headers: apiService.headerContent});
+                this.closeUnArchiveModal();
+                this.archived = 0;
+                await this.readApi();
+            } catch (error) {
+                this.error = error?.response?.data?.errors;
+            } finally {
+                this.unArchiveLoading = false;
+            }
+        },
+
+        /*** delete api ***/
+        async truncateApi() {
+            try {
+                this.truncateLoading = true;
+                const response = await axios.post(apiRoute.crud + '/truncate', {headers: apiService.headerContent});
+                this.closeTruncateModal();
+                await this.readApi();
+            } catch (error) {
+                this.error = error?.response?.data?.errors;
+            } finally {
+                this.truncateLoading = false;
             }
         },
 

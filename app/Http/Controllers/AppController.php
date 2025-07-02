@@ -17,7 +17,8 @@ class AppController
 
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        $query = User::query();
+        $archived = $request->query('archived', 0);
+        $query = User::query()->where('archived', $archived);
         if ($search = $request->query('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
@@ -28,10 +29,11 @@ class AppController
         $sortBy = $request->query('sort_by');
         $sortOrder = strtolower($request->query('sort_order', 'asc')) === 'desc' ? 'desc' : 'asc';
         $allowedSorts = ['id', 'name', 'email', 'phone_number'];
+
         if (in_array($sortBy, $allowedSorts)) {
             $query->orderBy($sortBy, $sortOrder);
         } else {
-            $query->orderBy('id', $sortOrder); // fallback to default column, but respect order
+            $query->orderBy('id', $sortOrder);
         }
         $limit = 20;
         $perPage = (int) $request->query('per_page', $limit);
@@ -69,14 +71,12 @@ class AppController
     public function show($id): \Illuminate\Http\JsonResponse
     {
         $user = User::findOrFail($id);
-
         return response()->json($user);
     }
 
     public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         $user = User::findOrFail($id);
-
         $validated = $request->validate([
             'name' => 'sometimes|required|string',
             'email' => 'sometimes|required|email|unique:users,email,' . $id,
@@ -84,14 +84,12 @@ class AppController
             'image' => 'nullable',
             'remove_image' => 'nullable|boolean',
         ]);
-
         if ($request->has('remove_image') && $request->remove_image) {
             if ($user->image && Storage::disk('public')->exists($user->image)) {
                 Storage::disk('public')->delete($user->image);
             }
             $validated['image'] = null;
         }
-
         if ($request->hasFile('image')) {
             if ($user->image && Storage::disk('public')->exists($user->image)) {
                 Storage::disk('public')->delete($user->image);
@@ -101,9 +99,7 @@ class AppController
             $path = $image->storeAs('images', $filename, 'public');
             $validated['image'] = $path;
         }
-
         $user->update($validated);
-
         return response()->json([
             'message' => 'User updated successfully',
             'data' => $user,
@@ -113,16 +109,50 @@ class AppController
     public function destroy($id): \Illuminate\Http\JsonResponse
     {
         $user = User::findOrFail($id);
-
         if ($user->image && Storage::disk('public')->exists($user->image)) {
             Storage::disk('public')->delete($user->image);
         }
-
         $user->delete();
-
         return response()->json([
             'message' => 'User deleted successfully',
         ]);
     }
+
+    public function archive($id): \Illuminate\Http\JsonResponse
+    {
+        $user = User::findOrFail($id);
+        $user->archived = true;
+        $user->save();
+
+        return response()->json([
+            'message' => 'User archived successfully.',
+        ]);
+    }
+
+    public function unArchive($id): \Illuminate\Http\JsonResponse
+    {
+        $user = User::findOrFail($id);
+        $user->archived = false;
+        $user->save();
+
+        return response()->json([
+            'message' => 'User unarchived successfully.',
+        ]);
+    }
+
+    public function clear(): \Illuminate\Http\JsonResponse
+    {
+        $users = User::all();
+        foreach ($users as $user) {
+            if ($user->image && Storage::disk('public')->exists($user->image)) {
+                Storage::disk('public')->delete($user->image);
+            }
+        }
+        User::truncate();
+        return response()->json([
+            'message' => 'All users deleted successfully.',
+        ]);
+    }
+
 
 }
