@@ -18,26 +18,29 @@ class AppController
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         $query = User::query();
-
         if ($search = $request->query('search')) {
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
                     ->orWhere('email', 'LIKE', "%{$search}%")
                     ->orWhere('phone_number', 'LIKE', "%{$search}%");
             });
         }
-
+        $sortBy = $request->query('sort_by');
+        $sortOrder = strtolower($request->query('sort_order', 'asc')) === 'desc' ? 'desc' : 'asc';
+        $allowedSorts = ['id', 'name', 'email', 'phone_number'];
+        if (in_array($sortBy, $allowedSorts)) {
+            $query->orderBy($sortBy, $sortOrder);
+        } else {
+            $query->orderBy('id', $sortOrder); // fallback to default column, but respect order
+        }
         $limit = 20;
         $perPage = (int) $request->query('per_page', $limit);
         if ($perPage < 1) {
             $perPage = $limit;
         }
-
         $users = $query->paginate($perPage);
-
         return response()->json($users);
     }
-
 
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
