@@ -18,15 +18,23 @@ class AppController
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         $query = User::query();
-        if ($search = $request->input('search')) {
+
+        if ($search = $request->query('search')) {
             $query->where(function($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
                     ->orWhere('email', 'LIKE', "%{$search}%")
                     ->orWhere('phone_number', 'LIKE', "%{$search}%");
             });
         }
-        $perPage = $request->input('per_page', 10);
+
+        $limit = 20;
+        $perPage = (int) $request->query('per_page', $limit);
+        if ($perPage < 1) {
+            $perPage = $limit;
+        }
+
         $users = $query->paginate($perPage);
+
         return response()->json($users);
     }
 

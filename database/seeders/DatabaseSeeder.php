@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
                 'name' => fake()->name(),
                 'email' => fake()->unique()->safeEmail(),
                 'phone_number' => fake()->phoneNumber(),
-                'image' => fake()->imageUrl(300, 300, 'people'),
+                'image' => null,
             ]);
         }
     }

@@ -2,8 +2,10 @@
 
     <div class="w-full max-w-[1024px] mx-auto py-5">
         <div class="w-full flex justify-between items-center mb-4">
-            <div class="text-[25px] font-bold"> Crud </div>
-            <button type="button" class="bg-gray-700 text-white outline-0 border-0 px-7 cursor-pointer py-2 inline-block rounded-lg" @click="openManageModal(null)">
+            <div class="text-[25px] font-bold"> Crud</div>
+            <button type="button"
+                    class="bg-gray-700 text-white outline-0 border-0 px-7 cursor-pointer py-2 inline-block rounded-lg"
+                    @click="openManageModal(null)">
                 Create
             </button>
         </div>
@@ -13,20 +15,20 @@
             <!-- list -->
             <table class="table-auto w-full text-[14px]">
                 <thead class="bg-gray-300">
-                    <tr>
-                        <th class="px-4 py-2 text-start font-medium">
-                            Name
-                        </th>
-                        <th class="px-4 py-2 text-start font-medium">
-                            Email
-                        </th>
-                        <th class="px-4 py-2 text-start font-medium">
-                            Phone Number
-                        </th>
-                        <th class="px-4 py-2 text-end font-medium">
-                            Action
-                        </th>
-                    </tr>
+                <tr>
+                    <th class="px-4 py-2 text-start font-medium">
+                        Name
+                    </th>
+                    <th class="px-4 py-2 text-start font-medium">
+                        Email
+                    </th>
+                    <th class="px-4 py-2 text-start font-medium">
+                        Phone Number
+                    </th>
+                    <th class="px-4 py-2 text-end font-medium">
+                        Action
+                    </th>
+                </tr>
                 </thead>
                 <tbody class="bg-gray-200">
                 <tr v-for="each in tableData" :key="each.id">
@@ -41,14 +43,22 @@
                     </td>
                     <td class="px-4 py-2 text-start font-normal">
                         <div class="flex justify-end items-center gap-2">
-                            <button type="button" class="min-w-[35px] max-w-[35px] min-h-[35px] max-h-[35px] bg-gray-300 inline-flex justify-center items-center rounded-full cursor-pointer" @click="openManageModal(each.id)">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-gray-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                            <button type="button"
+                                    class="min-w-[35px] max-w-[35px] min-h-[35px] max-h-[35px] bg-gray-300 inline-flex justify-center items-center rounded-full cursor-pointer"
+                                    @click="openManageModal(each.id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                     class="stroke-gray-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
                                 </svg>
                             </button>
-                            <button type="button" class="min-w-[35px] max-w-[35px] min-h-[35px] max-h-[35px] bg-rose-200 inline-flex justify-center items-center rounded-full cursor-pointer" @click="openDeleteModal(each.id)">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            <button type="button"
+                                    class="min-w-[35px] max-w-[35px] min-h-[35px] max-h-[35px] bg-rose-200 inline-flex justify-center items-center rounded-full cursor-pointer"
+                                    @click="openDeleteModal(each.id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                     class="stroke-rose-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                                 </svg>
                             </button>
                         </div>
@@ -72,8 +82,9 @@
                         :disabled="currentPage <= 1"
                         @click="goPrevious()"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                             stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
                         </svg>
                     </button>
 
@@ -175,8 +186,9 @@
                         :disabled="currentPage >= pageCount"
                         @click="goNext()"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                             stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
                         </svg>
                     </button>
                 </div>
@@ -197,28 +209,48 @@
     </div>
 
     <!-- manage modal -->
-    <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isManageModalActive, 'visible bg-black/65' : isManageModalActive }" @click="closeManageModal()">
-        <form @submit.prevent="manageApi()" class="bg-white rounded-3xl w-full sm:max-w-[550px] sm:min-w-[550px] p-10 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isManageModalActive, '-translate-y-1/2 opacity-0' : !isManageModalActive }" @click.stop>
+    <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto"
+             :class="{ 'invisible bg-black/35' : !isManageModalActive, 'visible bg-black/65' : isManageModalActive }"
+             @click="closeManageModal()">
+        <form @submit.prevent="manageApi()"
+              class="bg-white rounded-3xl w-full sm:max-w-[550px] sm:min-w-[550px] p-10 duration-500 origin-top"
+              :class="{ 'translate-y-0 opacity-100' : isManageModalActive, '-translate-y-1/2 opacity-0' : !isManageModalActive }"
+              @click.stop>
             <div class="flex justify-between items-center">
-                <div class="font-medium text-[21px]"> Crud <template v-if="!formData.id"> Create </template> <template v-if="formData.id"> Edit </template> </div>
-                <button type="button" class="bg-transparent duration-500 hover:bg-gray-200 text-white min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-full inline-flex justify-center items-center cursor-pointer" @click="closeManageModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#000" class="min-w-[20px] max-w-[20px] min-h-[20px] max-h-[20px]">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                <div class="font-medium text-[21px]"> Crud
+                    <template v-if="!formData.id"> Create</template>
+                    <template v-if="formData.id"> Edit</template>
+                </div>
+                <button type="button"
+                        class="bg-transparent duration-500 hover:bg-gray-200 text-white min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-full inline-flex justify-center items-center cursor-pointer"
+                        @click="closeManageModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                         stroke="#000" class="min-w-[20px] max-w-[20px] min-h-[20px] max-h-[20px]">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
             <div class="w-full block mb-3">
                 <div class="flex justify-center items-center">
-                    <label for="upload-file" class="min-w-[190px] max-w-[190px] min-h-[190px] max-h-[190px] rounded-full cursor-pointer bg-gray-200 duration-500 hover:bg-gray-300 max-h-[250px] inline-flex justify-center items-center" v-if="!attach_preview">
-                        <input type="file" name="upload-file" id="upload-file" hidden="hidden" @change="attachFile($event)">
+                    <label for="upload-file"
+                           class="min-w-[190px] max-w-[190px] min-h-[190px] max-h-[190px] rounded-full cursor-pointer bg-gray-200 duration-500 hover:bg-gray-300 max-h-[250px] inline-flex justify-center items-center"
+                           v-if="!attach_preview">
+                        <input type="file" name="upload-file" id="upload-file" hidden="hidden"
+                               @change="attachFile($event)">
                         <span class="text-[14px] font-medium"> Upload File </span>
                     </label>
                     <div class="relative" v-if="attach_preview">
-                        <img :src="attach_preview" class="min-w-[190px] max-w-[190px] min-h-[190px] max-h-[190px] rounded-full cursor-pointer bg-gray-200 duration-500 hover:bg-gray-300 max-h-[250px] object-cover bg-cover" alt="uploaded-image" />
+                        <img :src="attach_preview"
+                             class="min-w-[190px] max-w-[190px] min-h-[190px] max-h-[190px] rounded-full cursor-pointer bg-gray-200 duration-500 hover:bg-gray-300 max-h-[250px] object-cover bg-cover"
+                             alt="uploaded-image"/>
                         <div class="absolute inset-0 w-full h-full flex justify-center items-center bg-white/25">
-                            <button type="button" class="min-w-[35px] max-w-[35px] min-h-[35px] max-h-[35px] bg-rose-200 inline-flex justify-center items-center rounded-full cursor-pointer" @click="removeFile()">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            <button type="button"
+                                    class="min-w-[35px] max-w-[35px] min-h-[35px] max-h-[35px] bg-rose-200 inline-flex justify-center items-center rounded-full cursor-pointer"
+                                    @click="removeFile()">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                     class="stroke-rose-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                                 </svg>
                             </button>
                         </div>
@@ -226,46 +258,69 @@
                 </div>
                 <div class="w-full block mb-3">
                     <label for="name" class="block mb-1 text-[13px] font-medium"> Name </label>
-                    <input id="name" type="text" name="name" v-model="formData.name" class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3" autocomplete="off" />
-                    <div class="text-rose-600 mt-2 text-[12px] font-medium" v-if="error?.name"> {{error?.name[0]}} </div>
+                    <input id="name" type="text" name="name" v-model="formData.name"
+                           class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3"
+                           autocomplete="off"/>
+                    <div class="text-rose-600 mt-2 text-[12px] font-medium" v-if="error?.name"> {{ error?.name[0] }}
+                    </div>
                 </div>
                 <div class="w-full block mb-3">
                     <label for="email" class="block mb-1 text-[13px] font-medium"> Email </label>
-                    <input id="email" type="email" name="email" v-model="formData.email" class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3" autocomplete="off" />
-                    <div class="text-rose-600 mt-2 text-[12px] font-medium" v-if="error?.email"> {{error?.email[0]}} </div>
+                    <input id="email" type="email" name="email" v-model="formData.email"
+                           class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3"
+                           autocomplete="off"/>
+                    <div class="text-rose-600 mt-2 text-[12px] font-medium" v-if="error?.email"> {{ error?.email[0] }}
+                    </div>
                 </div>
                 <div class="w-full block">
                     <label for="phone_number" class="block mb-1 text-[13px] font-medium"> Phone Number </label>
-                    <input id="phone_number" type="text" name="phone_number" v-model="formData.phone_number" class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3" autocomplete="off" />
-                    <div class="text-rose-600 mt-2 text-[12px] font-medium" v-if="error?.phone_number"> {{error?.phone_number[0]}} </div>
+                    <input id="phone_number" type="text" name="phone_number" v-model="formData.phone_number"
+                           class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3"
+                           autocomplete="off"/>
+                    <div class="text-rose-600 mt-2 text-[12px] font-medium" v-if="error?.phone_number">
+                        {{ error?.phone_number[0] }}
+                    </div>
                 </div>
             </div>
             <div class="flex justify-end items-center gap-3">
-                <button type="button" class="bg-gray-200 duration-500 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeManageModal()">
+                <button type="button"
+                        class="bg-gray-200 duration-500 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer"
+                        @click="closeManageModal()">
                     Cancel
                 </button>
-                <button type="submit" class="bg-gray-200 duration-500 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer">
-                    <template v-if="!formData.id"> Save </template>
-                    <template v-if="formData.id"> Update </template>
+                <button type="submit"
+                        class="bg-gray-200 duration-500 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer">
+                    <template v-if="!formData.id"> Save</template>
+                    <template v-if="formData.id"> Update</template>
                 </button>
             </div>
         </form>
     </section>
 
     <!-- delete modal -->
-    <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isDeleteModalActive, 'visible bg-black/65' : isDeleteModalActive }" @click="closeDeleteModal()">
-        <form @submit.prevent="deleteApi()" class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isDeleteModalActive, '-translate-y-1/2 opacity-0' : !isDeleteModalActive }" @click.stop>
+    <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto"
+             :class="{ 'invisible bg-black/35' : !isDeleteModalActive, 'visible bg-black/65' : isDeleteModalActive }"
+             @click="closeDeleteModal()">
+        <form @submit.prevent="deleteApi()"
+              class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top"
+              :class="{ 'translate-y-0 opacity-100' : isDeleteModalActive, '-translate-y-1/2 opacity-0' : !isDeleteModalActive }"
+              @click.stop>
             <div class="w-full flex justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[65px] max-w-[65px] min-h-[65px] max-h-[65px]">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                     class="stroke-rose-500 min-w-[65px] max-w-[65px] min-h-[65px] max-h-[65px]">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                 </svg>
             </div>
-            <div class="text-center text-[21px] my-4"> Are you sure? </div>
+            <div class="text-center text-[21px] my-4"> Are you sure?</div>
             <div class="w-full flex justify-center items-center gap-3">
-                <button type="button" class="bg-gray-200 duration-500 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[110px] max-w-[110px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeDeleteModal()">
+                <button type="button"
+                        class="bg-gray-200 duration-500 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[110px] max-w-[110px] rounded-xl text-[12px] font-medium cursor-pointer"
+                        @click="closeDeleteModal()">
                     Cancel
                 </button>
-                <button type="submit" class="bg-rose-200 duration-500 hover:bg-rose-300 text-rose-600 min-h-[45px] max-h-[45px] min-w-[110px] max-w-[110px] rounded-xl text-[12px] font-medium cursor-pointer">
+                <button type="submit"
+                        class="bg-rose-200 duration-500 hover:bg-rose-300 text-rose-600 min-h-[45px] max-h-[45px] min-w-[110px] max-w-[110px] rounded-xl text-[12px] font-medium cursor-pointer">
                     Confirm
                 </button>
             </div>
@@ -298,7 +353,7 @@ export default {
             },
             tableData: [],
             currentPage: 1,
-            perPage: 10,
+            perPage: 15,
             total: 0,
             pageCount: 0,
             from: 0,
@@ -315,7 +370,7 @@ export default {
         /*** open manage modal ***/
         openManageModal(data = null) {
             this.formData.remove_image = false;
-            if(data !== null) {
+            if (data !== null) {
                 this.singleApi(data);
             } else {
                 this.attach_preview = null;
@@ -365,7 +420,7 @@ export default {
 
         /*** manage api - create and update ***/
         manageApi() {
-            if(this.formData.id !== null) {
+            if (this.formData.id !== null) {
                 this.updateApi();
             } else {
                 this.createApi();
@@ -390,7 +445,7 @@ export default {
         async readApi(page = 1) {
             try {
                 this.loading = true;
-                const response = await axios.get(`${apiRoute.crud}?page=${page}`, {
+                const response = await axios.get(`${apiRoute.crud}?page=${page}&per_page=${this.perPage}`, {
                     headers: apiService.headerContent
                 });
 
@@ -431,9 +486,9 @@ export default {
         async singleApi(data) {
             try {
                 this.singleLoading = true;
-                const response = await axios.get(apiRoute.crud+'/'+data, this.formData, {headers: apiService.mediaHeaderContent});
+                const response = await axios.get(apiRoute.crud + '/' + data, this.formData, {headers: apiService.mediaHeaderContent});
                 this.formData = response?.data;
-                if(response?.data?.image) {
+                if (response?.data?.image) {
                     this.attach_preview = `/storage/${response?.data?.image}`;
                 } else {
                     this.attach_preview = null;
@@ -460,7 +515,7 @@ export default {
                     form.append('remove_image', '1');
                 }
                 form.append('_method', 'PUT');
-                const response = await axios.post(apiRoute.crud + '/' + this.formData.id, form, { headers: apiService.mediaHeaderContent });
+                const response = await axios.post(apiRoute.crud + '/' + this.formData.id, form, {headers: apiService.mediaHeaderContent});
                 this.closeManageModal();
                 await this.readApi();
             } catch (error) {
@@ -474,7 +529,7 @@ export default {
         async deleteApi() {
             try {
                 this.deleteLoading = true;
-                const response = await axios.delete(apiRoute.crud+'/'+this.formData.id, {headers: apiService.headerContent});
+                const response = await axios.delete(apiRoute.crud + '/' + this.formData.id, {headers: apiService.headerContent});
                 this.closeDeleteModal();
                 await this.readApi();
             } catch (error) {
