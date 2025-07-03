@@ -4,15 +4,29 @@
 
         <!-- header -->
         <div class="w-full sm:flex justify-between items-center mb-5">
-            <div class="text-[21px] font-bold mb-4 sm:mb-0"> Crud </div>
+            <div class="text-[21px] font-bold mb-4 sm:mb-0">
+                <router-link :to="{name:'index'}" class="decoration-0 text-black"> Crud </router-link>
+            </div>
             <div class="flex justify-end gap-2 flex-wrap">
 
                 <template v-if="tableData.length > 0 && loading === false && selectUserId.length > 0">
-                    <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-red-300 duration-500 hover:bg-red-600 group inline-flex cursor-pointer justify-center items-center" @click="openDeleteModal()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
-                        </svg>
-                    </button>
+                    <div class="flex justify-end items-center gap-3">
+                        <button type="button" v-if="archived === 0" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-blue-200 duration-500 hover:bg-blue-600 group inline-flex cursor-pointer justify-center items-center" @click="openArchiveModal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="stroke-blue-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                            </svg>
+                        </button>
+                        <button type="button" v-if="archived === 1" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-blue-200 duration-500 hover:bg-blue-600 group inline-flex cursor-pointer justify-center items-center" @click="openUnArchiveModal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="stroke-blue-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                            </svg>
+                        </button>
+                        <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-red-300 duration-500 hover:bg-red-600 group inline-flex cursor-pointer justify-center items-center" @click="openDeleteModal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                            </svg>
+                        </button>
+                    </div>
                 </template>
 
                 <input type="text" name="search" v-model="search" @input="searchData()" class="w-full text-[14px] w-full sm:min-w-[210px] sm:max-w-[210px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 appearance-none" required autocomplete="off" placeholder="Search Here" />
@@ -91,9 +105,9 @@
                                         <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-s-xl bg-gray-100 min-w-1/4">
                                             <label for="check-all" class="inline-flex mb-0 justify-start items-center">
                                                 <input id="check-all" type="checkbox" hidden="hidden" :checked="allData.length > 0 && allData.length === selectUserId.length" @change="selectAllUser($event)">
-                                                <span class="min-w-[25px] min-h-[25px] max-w-[25px] max-h-[25px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400" :class="{ 'bg-white' : allData.length > 0 && allData.length === selectUserId.length }">
+                                                <span class="min-w-[20px] min-h-[20px] max-w-[20px] max-h-[20px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400">
                                                     <template v-if="allData.length > 0 && allData.length === selectUserId.length">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="4" stroke="currentColor" class="stroke-gray-600 min-w-[12px] min-h-[12px] max-w-[12px] max-h-[12px]">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[12px] min-h-[12px] max-w-[12px] max-h-[12px]">
                                                           <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                                         </svg>
                                                     </template>
@@ -119,8 +133,15 @@
                                 <td class="font-medium" colspan="4">
                                     <div class="flex justify-start items-center mt-2">
                                         <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-s-xl bg-gray-100 min-w-1/4">
-                                            <div class="inline-flex justify-start items-center">
-                                                <input type="checkbox" :checked="checkIfChecked(each.id)" @change="selectUser(each.id)" />
+                                            <label :for="'check-separated-'+each.id" class="inline-flex mb-0 justify-start items-center">
+                                                <input :id="'check-separated-'+each.id" type="checkbox" hidden="hidden"  :checked="checkIfChecked(each.id)" @change="selectUser(each.id)">
+                                                <span class="min-w-[20px] min-h-[20px] max-w-[20px] max-h-[20px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400">
+                                                    <template v-if="checkIfChecked(each.id)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[12px] min-h-[12px] max-w-[12px] max-h-[12px]">
+                                                          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                        </svg>
+                                                    </template>
+                                                </span>
                                                 <span class="ms-3 inline-flex justify-start items-center">
                                                     <div v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
                                                         {{shortName(each.name)}}
@@ -128,7 +149,7 @@
                                                     <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] object-cover bg-cover rounded-full" alt="image" />
                                                     <span class="ms-3"> {{ each.name }} </span>
                                                 </span>
-                                            </div>
+                                            </label>
                                         </div>
                                         <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-0 bg-gray-100 min-w-1/4">
                                             {{ each.email }}
@@ -243,7 +264,7 @@
             <div v-if="!loading & tableData.length === 0">
 
                 <!-- no records found -->
-                <div class="w-full min-h-[calc(100vh-250px)] bg-gray-100 rounded-xl text-gray-600 font-semibold flex justify-center items-center">
+                <div class="w-full min-h-[calc(100vh-250px)] text-[21px] bg-gray-100 rounded-xl text-gray-600 flex justify-center items-center">
                     No records found.
                 </div>
 
@@ -252,8 +273,8 @@
             <template v-if="loading">
 
                 <!-- loading -->
-                <div class="w-full min-h-[calc(100vh-250px)] bg-gray-100 rounded-xl text-gray-600 font-semibold flex justify-center items-center">
-                    <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-green-800 border-t-transparent animate-spin"></span>
+                <div class="w-full min-h-[calc(100vh-250px)] bg-gray-100 rounded-xl text-gray-600 flex justify-center items-center">
+                    <span class="inline-block rounded-full min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] border-2 border-green-800 border-t-transparent animate-spin"></span>
                 </div>
 
             </template>
@@ -455,7 +476,7 @@ export default {
             singleLoading: false,
 
             // selector
-            deleteType: 'check',
+            controlType: 'check',
 
             // table data properties
             tableData: [],
@@ -604,7 +625,7 @@ export default {
                 form.append('phone_number', this.formData.phone_number);
                 if (this.formData.image instanceof File) { form.append('image', this.formData.image); }
                 if (this.formData.remove_image) { form.append('remove_image', '1'); }
-                const response = await axios.post(apiRoute.crud, form, {headers: apiService.mediaHeaderContent});
+                await axios.post(apiRoute.crud, form, {headers: apiService.mediaHeaderContent});
                 this.closeManageModal();
                 await this.readApi();
             } catch (error) {
@@ -645,9 +666,7 @@ export default {
                         headers: apiService.headerContent
                     }
                 );
-                const res = response.data;
-                this.allData = res;
-                console.log(this.allData);
+                this.allData = response.data;
             } catch (error) {
                 this.error = error?.response?.data?.errors;
             } finally {
@@ -712,7 +731,7 @@ export default {
 
         /*** check if checked ***/
         checkIfChecked(id) {
-            this.deleteType = 'check';
+            this.controlType = 'check';
             return this.selectUserId.includes(id);
         },
 
@@ -805,7 +824,7 @@ export default {
                 if (this.formData.image instanceof File) { form.append('image', this.formData.image); }
                 if (this.formData.remove_image) { form.append('remove_image', '1'); }
                 form.append('_method', 'PUT');
-                const response = await axios.post(apiRoute.crud + '/' + this.formData.id, form, {headers: apiService.mediaHeaderContent});
+                await axios.post(apiRoute.crud + '/' + this.formData.id, form, {headers: apiService.mediaHeaderContent});
                 this.closeManageModal();
                 await this.readApi();
             } catch (error) {
@@ -815,9 +834,9 @@ export default {
             }
         },
 
-        /*** deleteMaintain ***/
+        /*** delete Maintain ***/
         deleteApi() {
-            if(this.deleteType === 'check') {
+            if(this.controlType === 'check') {
                 this.selectedDeleteApi();
             } else {
                 this.normalDeleteApi();
@@ -838,11 +857,12 @@ export default {
             }
         },
 
-        /*** delete api ***/
+        /*** selected delete api ***/
         async selectedDeleteApi() {
             try {
                 this.deleteLoading = true;
                 await axios.post(apiRoute.crud+'/selected?ids='+this.selectUserId, {headers: apiService.headerContent});
+                this.selectUserId = [];
                 this.closeDeleteModal();
                 await this.readApi();
             } catch (error) {
@@ -852,8 +872,17 @@ export default {
             }
         },
 
+        /*** archive Maintain ***/
+        archiveApi() {
+            if(this.controlType === 'check') {
+                this.selectArchiveApi();
+            } else {
+                this.normalArchiveApi();
+            }
+        },
+
         /*** archive api ***/
-        async archiveApi() {
+        async normalArchiveApi() {
             try {
                 this.archiveLoading = true;
                 await axios.post(apiRoute.crud + '/' + this.formData.id + '/archive', null, { headers: apiService.headerContent });
@@ -866,11 +895,52 @@ export default {
             }
         },
 
+        /*** select archive api ***/
+        async selectArchiveApi() {
+            try {
+                this.archiveLoading = true;
+                await axios.post(apiRoute.crud + '/selected/' + this.selectUserId + '/archive', { ids: this.selectUserId }, { headers: apiService.headerContent });
+                this.selectUserId = [];
+                this.closeArchiveModal();
+                this.archived = 0
+                await this.readApi();
+            } catch (error) {
+                this.error = error?.response?.data?.errors;
+            } finally {
+                this.archiveLoading = false;
+            }
+        },
+
+        /*** unArchive Maintain ***/
+        unArchiveApi() {
+            if(this.controlType === 'check') {
+                this.selectUnArchiveApi();
+            } else {
+                this.normalUnArchiveApi();
+            }
+        },
+
         /*** archive api ***/
-        async unArchiveApi() {
+        async normalUnArchiveApi() {
             try {
                 this.unArchiveLoading = true;
                 await axios.post(apiRoute.crud + '/' + this.formData.id + '/unArchive', null, {headers: apiService.headerContent});
+                this.closeUnArchiveModal();
+                this.archived = 0;
+                await this.readApi();
+            } catch (error) {
+                this.error = error?.response?.data?.errors;
+            } finally {
+                this.unArchiveLoading = false;
+            }
+        },
+
+        /*** select unArchive api ***/
+        async selectUnArchiveApi() {
+            try {
+                this.unArchiveLoading = true;
+                await axios.post(apiRoute.crud + '/selected/' + this.selectUserId + '/unArchive', { ids: this.selectUserId }, { headers: apiService.headerContent });
+                this.selectUserId = [];
                 this.closeUnArchiveModal();
                 this.archived = 0;
                 await this.readApi();

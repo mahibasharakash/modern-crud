@@ -152,6 +152,36 @@ class AppController
         ]);
     }
 
+    public function archiveBySelected(Request $request, $id = null): \Illuminate\Http\JsonResponse
+    {
+        $ids = [];
+
+        if ($request->has('ids')) {
+            $ids = is_array($request->ids) ? $request->ids : explode(',', $request->ids);
+        } elseif ($id !== null) {
+            $ids = [$id];
+        }
+
+        if (empty($ids)) {
+            return response()->json(['message' => 'No user IDs provided.'], 400);
+        }
+
+        $updated = 0;
+
+        foreach ($ids as $userId) {
+            $user = User::find($userId);
+            if ($user && !$user->archived) {
+                $user->archived = true;
+                $user->save();
+                $updated++;
+            }
+        }
+
+        return response()->json([
+            'message' => "Archived {$updated} user(s) successfully.",
+        ]);
+    }
+
     public function unArchive($id): \Illuminate\Http\JsonResponse
     {
         $user = User::findOrFail($id);
@@ -159,6 +189,36 @@ class AppController
         $user->save();
         return response()->json([
             'message' => 'User unarchived successfully.',
+        ]);
+    }
+
+    public function unArchiveBySelected(Request $request, $id = null): \Illuminate\Http\JsonResponse
+    {
+        $ids = [];
+
+        if ($request->has('ids')) {
+            $ids = is_array($request->ids) ? $request->ids : explode(',', $request->ids);
+        } elseif ($id !== null) {
+            $ids = [$id];
+        }
+
+        if (empty($ids)) {
+            return response()->json(['message' => 'No user IDs provided.'], 400);
+        }
+
+        $updated = 0;
+
+        foreach ($ids as $userId) {
+            $user = User::find($userId);
+            if ($user && $user->archived) {
+                $user->archived = false;
+                $user->save();
+                $updated++;
+            }
+        }
+
+        return response()->json([
+            'message' => "Unarchived {$updated} user(s) successfully.",
         ]);
     }
 
