@@ -96,7 +96,7 @@
             <template  v-if="!loading & tableData.length > 0">
 
                 <!-- table data -->
-                <div class="w-full max-h-[calc(100vh-250px)] min-h-[calc(100vh-250px)] overflow-y-auto pe-2">
+                <div class="w-full max-h-[calc(100vh-200px)] min-h-[calc(100vh-200px)] overflow-y-auto pe-2">
                     <table class="table-auto w-full text-[14px]">
                         <thead>
                             <tr>
@@ -206,7 +206,7 @@
 
                     <!-- pagination -->
                     <div class="flex justify-center items-center gap-2">
-                        <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :disabled="currentPage <= 1" @click="goPrevious()">
+                        <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :class="{ 'pointer-events-none' : currentPage <= 1 }" @click="goPrevious()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
                             </svg>
@@ -246,7 +246,7 @@
                                 {{ pageCount }}
                             </button>
                         </template>
-                        <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :disabled="currentPage >= pageCount" @click="goNext()">
+                        <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :class="{ 'pointer-events-none' : currentPage >= pageCount }" @click="goNext()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                  stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
@@ -264,7 +264,7 @@
             <div v-if="!loading & tableData.length === 0">
 
                 <!-- no records found -->
-                <div class="w-full min-h-[calc(100vh-250px)] text-[21px] bg-gray-100 rounded-xl text-gray-600 flex justify-center items-center">
+                <div class="w-full min-h-[calc(100vh-200px)] text-[21px] bg-gray-100 rounded-xl text-gray-600 flex justify-center items-center">
                     No records found.
                 </div>
 
@@ -273,7 +273,7 @@
             <template v-if="loading">
 
                 <!-- loading -->
-                <div class="w-full min-h-[calc(100vh-250px)] bg-gray-100 rounded-xl text-gray-600 flex justify-center items-center">
+                <div class="w-full min-h-[calc(100vh-200px)] bg-gray-100 rounded-xl text-gray-600 flex justify-center items-center">
                     <span class="inline-block rounded-full min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] border-2 border-green-800 border-t-transparent animate-spin"></span>
                 </div>
 
@@ -713,7 +713,9 @@ export default {
             if (e.target.checked) {
                 this.allData.forEach((v) => {
                     this.selectUserId.push(v.id);
+                    this.controlType = '';
                 });
+                this.controlType = 'check';
             } else {
                 this.selectUserId = [];
             }
@@ -724,14 +726,15 @@ export default {
             const index = this.selectUserId.indexOf(id);
             if (index > -1) {
                 this.selectUserId.splice(index, 1);
+                this.controlType = '';
             } else {
                 this.selectUserId.push(id);
+                this.controlType = 'check';
             }
         },
 
         /*** check if checked ***/
         checkIfChecked(id) {
-            this.controlType = 'check';
             return this.selectUserId.includes(id);
         },
 
