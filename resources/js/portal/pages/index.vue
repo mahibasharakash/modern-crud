@@ -7,16 +7,8 @@
             <div class="text-[21px] font-bold mb-4 sm:mb-0"> Crud </div>
             <div class="flex justify-end gap-2 flex-wrap">
 
-                <template v-if="deleteSeperatedData">
+                <template v-if="tableData.length > 0 && loading === false && selectUserId.length > 0">
                     <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-red-300 duration-500 hover:bg-red-600 group inline-flex cursor-pointer justify-center items-center" @click="openDeleteModal()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
-                        </svg>
-                    </button>
-                </template>
-
-                <template v-if="clearAllData">
-                    <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-red-300 duration-500 hover:bg-red-600 group inline-flex cursor-pointer justify-center items-center" @click="openTruncateModal()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                         </svg>
@@ -97,7 +89,7 @@
                                 <th class="font-medium" colspan="4">
                                     <div class="flex justify-start items-center">
                                         <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-s-xl bg-gray-100 min-w-1/4">
-                                            <input type="checkbox" :checked="clearAllData" @change="selectAllUser()"/> <span class="ms-3"> Name </span>
+                                            <input type="checkbox" :checked="allData.length > 0 && allData.length === selectUserId.length" @change="selectAllUser($event)"/> <span class="ms-3"> Name </span>
                                         </div>
                                         <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-0 bg-gray-100 min-w-1/4">
                                             Email
@@ -453,8 +445,7 @@ export default {
             singleLoading: false,
 
             // selector
-            clearAllData: false,
-            deleteSeperatedData: false,
+            deleteType: 'check',
 
             // table data properties
             tableData: [],
@@ -624,7 +615,7 @@ export default {
         },
 
         /*** handle click outside ***/
-        handleClickOutside(event) {
+        handleClickOutside() {
             if (this.activeDropdownIndex !== null) {
                 this.activeDropdownIndex = null;
             }
@@ -638,6 +629,7 @@ export default {
                     {
                         params:
                             {
+                                archived: this.archived,
                                 paginate: 1
                             },
                         headers: apiService.headerContent
@@ -688,17 +680,13 @@ export default {
         },
 
         /*** select all user to push all id ***/
-        selectAllUser() {
-            this.clearAllData = !this.clearAllData;
-            const currentPageIds = this.allData.map(item => item.id);
-            if (this.clearAllData) {
-                currentPageIds.forEach(id => {
-                    if (!this.selectUserId.includes(id)) {
-                        this.selectUserId.push(id);
-                    }
+        selectAllUser(e) {
+            if (e.target.checked) {
+                this.allData.forEach((v) => {
+                    this.selectUserId.push(v.id);
                 });
             } else {
-                this.selectUserId = this.selectUserId.filter(id => !currentPageIds.includes(id));
+                this.selectUserId = [];
             }
         },
 
@@ -707,17 +695,14 @@ export default {
             const index = this.selectUserId.indexOf(id);
             if (index > -1) {
                 this.selectUserId.splice(index, 1);
-                if(this.selectUserId.length === 0) {
-                    this.deleteSeperatedData = false;
-                }
             } else {
                 this.selectUserId.push(id);
-                this.deleteSeperatedData = true;
             }
         },
 
         /*** check if checked ***/
         checkIfChecked(id) {
+            this.deleteType = 'check';
             return this.selectUserId.includes(id);
         },
 
@@ -737,6 +722,7 @@ export default {
 
         /*** filter sort change read api ***/
         sortChange() {
+            this.readApiAll();
             this.readApi(1);
         },
 
@@ -821,7 +807,7 @@ export default {
 
         /*** deleteMaintain ***/
         deleteApi() {
-            if(this.deleteSeperatedData) {
+            if(this.deleteType === 'check') {
                 this.selectedDeleteApi();
             } else {
                 this.normalDeleteApi();
@@ -848,7 +834,6 @@ export default {
                 this.deleteLoading = true;
                 await axios.post(apiRoute.crud+'/selected?ids='+this.selectUserId, {headers: apiService.headerContent});
                 this.closeDeleteModal();
-                this.deleteSeperatedData = false;
                 await this.readApi();
             } catch (error) {
                 this.error = error?.response?.data?.errors;
@@ -892,7 +877,6 @@ export default {
                 this.truncateLoading = true;
                 await axios.post(apiRoute.crud + '/truncate', {headers: apiService.headerContent});
                 this.closeTruncateModal();
-                this.clearAllData = false;
                 await this.readApi();
             } catch (error) {
                 this.error = error?.response?.data?.errors;
