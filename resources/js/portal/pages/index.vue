@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="relative w-full sm:min-w-[210px] sm:max-w-[210px]">
-                    <select name="sort_by" v-model="sort_by" @change="sortChange()" class="w-full text-[14px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
+                    <select name="sort_by" v-model="sort_by" @change="sortChange()" class="w-full text-[14px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
                         <option :value="''"> Select Sort Column </option>
                         <option :value="'name'"> Name </option>
                         <option :value="'email'"> Email </option>
@@ -100,14 +100,14 @@
                     <table class="table-auto w-full text-[14px]">
                         <thead>
                             <tr>
-                                <th class="font-medium" colspan="4">
+                                <th class="font-medium text-[14px]" colspan="4">
                                     <div class="flex justify-start items-center">
                                         <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-s-xl bg-gray-100 min-w-1/4">
                                             <label for="check-all" class="inline-flex mb-0 justify-start items-center">
                                                 <input id="check-all" type="checkbox" hidden="hidden" :checked="allData.length > 0 && allData.length === selectUserId.length" @change="selectAllUser($event)">
                                                 <span class="min-w-[20px] min-h-[20px] max-w-[20px] max-h-[20px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400">
                                                     <template v-if="allData.length > 0 && allData.length === selectUserId.length">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[12px] min-h-[12px] max-w-[12px] max-h-[12px]">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[14px] min-h-[14px] max-w-[14px] max-h-[14px]">
                                                           <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                                         </svg>
                                                     </template>
@@ -130,14 +130,14 @@
                         </thead>
                         <tbody>
                             <tr v-for="(each, index) in tableData" :key="each.id">
-                                <td class="font-medium" colspan="4">
+                                <td class="font-normal text-[14px]" colspan="4">
                                     <div class="flex justify-start items-center mt-2">
                                         <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-s-xl bg-gray-100 min-w-1/4">
                                             <label :for="'check-separated-'+each.id" class="inline-flex mb-0 justify-start items-center">
                                                 <input :id="'check-separated-'+each.id" type="checkbox" hidden="hidden"  :checked="checkIfChecked(each.id)" @change="selectUser(each.id)">
                                                 <span class="min-w-[20px] min-h-[20px] max-w-[20px] max-h-[20px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400">
                                                     <template v-if="checkIfChecked(each.id)">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[12px] min-h-[12px] max-w-[12px] max-h-[12px]">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[14px] min-h-[14px] max-w-[14px] max-h-[14px]">
                                                           <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                                         </svg>
                                                     </template>
@@ -316,24 +316,24 @@
                 <div class="w-full block mb-3">
                     <label for="name" class="block mb-1 text-[13px] font-medium"> Name </label>
                     <input id="name" type="text" name="name" v-model="formData.name" class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3" autocomplete="off"/>
-                    <div class="text-rose-600 mt-2 text-[12px] font-medium" v-if="error?.name"> {{ error?.name[0] }} </div>
+                    <div class="text-rose-600 mt-2 text-[14px] font-medium" v-if="error?.name"> {{ error?.name[0] }} </div>
                 </div>
                 <div class="w-full block mb-3">
                     <label for="email" class="block mb-1 text-[13px] font-medium"> Email </label>
                     <input id="email" type="email" name="email" v-model="formData.email" class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3" autocomplete="off"/>
-                    <div class="text-rose-600 mt-2 text-[12px] font-medium" v-if="error?.email"> {{ error?.email[0] }} </div>
+                    <div class="text-rose-600 mt-2 text-[14px] font-medium" v-if="error?.email"> {{ error?.email[0] }} </div>
                 </div>
                 <div class="w-full block">
                     <label for="phone_number" class="block mb-1 text-[13px] font-medium"> Phone Number </label>
                     <input id="phone_number" type="text" name="phone_number" v-model="formData.phone_number" class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3" autocomplete="off"/>
-                    <div class="text-rose-600 mt-2 text-[12px] font-medium" v-if="error?.phone_number"> {{ error?.phone_number[0] }} </div>
+                    <div class="text-rose-600 mt-2 text-[14px] font-medium" v-if="error?.phone_number"> {{ error?.phone_number[0] }} </div>
                 </div>
             </div>
             <div class="flex justify-end items-center gap-3">
-                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeManageModal()">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" @click="closeManageModal()">
                     Cancel
                 </button>
-                <button type="submit" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!manageLoading">
+                <button type="submit" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="!manageLoading">
                     <template v-if="!formData.id">
                         Save
                     </template>
@@ -341,7 +341,7 @@
                         Update
                     </template>
                 </button>
-                <button type="button" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="manageLoading">
+                <button type="button" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="manageLoading">
                     <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-green-800 border-t-transparent animate-spin"></span>
                 </button>
             </div>
@@ -350,7 +350,7 @@
 
     <!-- delete modal -->
     <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isDeleteModalActive, 'visible bg-black/65' : isDeleteModalActive }" @click="closeDeleteModal()">
-        <form @submit.prevent="deleteApi()" class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isDeleteModalActive, '-translate-y-1/2 opacity-0' : !isDeleteModalActive }" @click.stop>
+        <form @submit.prevent="deleteApi()" class="bg-white rounded-3xl w-full sm:max-w-[400px] sm:min-w-[400px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isDeleteModalActive, '-translate-y-1/2 opacity-0' : !isDeleteModalActive }" @click.stop>
             <div class="w-full flex justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px]">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
@@ -358,13 +358,13 @@
             </div>
             <div class="text-center text-[18px] my-5"> Are you Permanent <br> Delete surely? </div>
             <div class="w-full flex justify-center items-center gap-3">
-                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeDeleteModal()">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" @click="closeDeleteModal()">
                     Cancel
                 </button>
-                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!deleteLoading">
+                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="!deleteLoading">
                     Confirm
                 </button>
-                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="deleteLoading">
+                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="deleteLoading">
                     <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-red-800 border-t-transparent animate-spin"></span>
                 </button>
             </div>
@@ -373,7 +373,7 @@
 
     <!-- archive modal -->
     <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isArchiveModalActive, 'visible bg-black/65' : isArchiveModalActive }" @click="closeArchiveModal()">
-        <form @submit.prevent="archiveApi()" class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isArchiveModalActive, '-translate-y-1/2 opacity-0' : !isArchiveModalActive }" @click.stop>
+        <form @submit.prevent="archiveApi()" class="bg-white rounded-3xl w-full sm:max-w-[400px] sm:min-w-[400px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isArchiveModalActive, '-translate-y-1/2 opacity-0' : !isArchiveModalActive }" @click.stop>
             <div class="w-full flex justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px]">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
@@ -381,13 +381,13 @@
             </div>
             <div class="text-center text-[18px] my-5"> Are you <br> archive surely?</div>
             <div class="w-full flex justify-center items-center gap-3">
-                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeArchiveModal()">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" @click="closeArchiveModal()">
                     Cancel
                 </button>
-                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!archiveLoading">
+                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="!archiveLoading">
                     Confirm
                 </button>
-                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="archiveLoading">
+                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="archiveLoading">
                     <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-red-800 border-t-transparent animate-spin"></span>
                 </button>
             </div>
@@ -396,7 +396,7 @@
 
     <!-- unArchive modal -->
     <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isUnArchiveModalActive, 'visible bg-black/65' : isUnArchiveModalActive }" @click="closeUnArchiveModal()">
-        <form @submit.prevent="unArchiveApi()" class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isUnArchiveModalActive, '-translate-y-1/2 opacity-0' : !isUnArchiveModalActive }" @click.stop>
+        <form @submit.prevent="unArchiveApi()" class="bg-white rounded-3xl w-full sm:max-w-[400px] sm:min-w-[400px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isUnArchiveModalActive, '-translate-y-1/2 opacity-0' : !isUnArchiveModalActive }" @click.stop>
             <div class="w-full flex justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px]">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
@@ -404,13 +404,13 @@
             </div>
             <div class="text-center text-[18px] my-5"> Are you <br> unArchive surely?</div>
             <div class="w-full flex justify-center items-center gap-3">
-                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeUnArchiveModal()">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" @click="closeUnArchiveModal()">
                     Cancel
                 </button>
-                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!unArchiveLoading">
+                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="!unArchiveLoading">
                     Confirm
                 </button>
-                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="unArchiveLoading">
+                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="unArchiveLoading">
                     <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-red-800 border-t-transparent animate-spin"></span>
                 </button>
             </div>
@@ -419,7 +419,7 @@
 
     <!-- truncate modal -->
     <section class="fixed inset-0 grid sm:justify-center items-center duration-500 z-50 p-5 overflow-y-auto" :class="{ 'invisible bg-black/35' : !isTruncateModalActive, 'visible bg-black/65' : isTruncateModalActive }" @click="closeTruncateModal()">
-        <form @submit.prevent="truncateApi()" class="bg-white rounded-3xl w-full sm:max-w-[350px] sm:min-w-[350px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isTruncateModalActive, '-translate-y-1/2 opacity-0' : !isTruncateModalActive }" @click.stop>
+        <form @submit.prevent="truncateApi()" class="bg-white rounded-3xl w-full sm:max-w-[400px] sm:min-w-[400px] py-10 px-5 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isTruncateModalActive, '-translate-y-1/2 opacity-0' : !isTruncateModalActive }" @click.stop>
             <div class="w-full flex justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px]">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
@@ -427,13 +427,13 @@
             </div>
             <div class="text-center text-[18px] my-5"> Are you <br> clear all data surely?</div>
             <div class="w-full flex justify-center items-center gap-3">
-                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" @click="closeTruncateModal()">
+                <button type="button" class="bg-gray-200 duration-500 text-gray-900 inline-flex justify-center items-center gap-1 hover:bg-gray-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" @click="closeTruncateModal()">
                     Cancel
                 </button>
-                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!truncateLoading">
+                <button type="submit" class="bg-red-200 duration-500 text-red-900 inline-flex justify-center items-center gap-1 hover:bg-red-300 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="!truncateLoading">
                     Confirm
                 </button>
-                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="truncateLoading">
+                <button type="button" class="bg-red-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-red-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="truncateLoading">
                     <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-red-800 border-t-transparent animate-spin"></span>
                 </button>
             </div>
@@ -449,6 +449,7 @@ import apiRoute from '../../apiController/apiRoute.js';
 import apiService from '../../apiController/apiService.js';
 
 export default {
+
     data() {
         return {
 
@@ -480,6 +481,7 @@ export default {
 
             // table data properties
             tableData: [],
+            allData: [],
             activeDropdownIndex: null,
             loading: false,
             currentPage: 1,
@@ -506,21 +508,26 @@ export default {
             },
             error: {},
             attach_preview: null,
-            allData: []
 
         }
     },
+
     async mounted() {
         await this.readApiAll();
         await this.readApi(1);
     },
+
     beforeMount() {
         window.addEventListener("click", this.handleClickOutside);
     },
+
     beforeUnmount() {
         window.removeEventListener("click", this.handleClickOutside);
     },
+
     methods: {
+
+        // === === === Manage Crud === === ===
 
         /*** open manage modal ***/
         openManageModal(data = null) {
@@ -548,48 +555,22 @@ export default {
             this.formData.remove_image = false;
         },
 
-        /*** open delete modal ***/
-        openDeleteModal(data) {
-            this.formData.id = data
-            this.isDeleteModalActive = true;
-        },
-
-        /*** close delete modal ***/
-        closeDeleteModal() {
-            this.isDeleteModalActive = false;
-            this.formData.remove_image = false;
-        },
-
-        /*** open delete modal ***/
-        openArchiveModal(data) {
-            this.formData.id = data
-            this.isArchiveModalActive = true;
-        },
-
-        /*** close delete modal ***/
-        closeArchiveModal() {
-            this.isArchiveModalActive = false;
-        },
-
-        /*** open delete modal ***/
-        openTruncateModal() {
-            this.isTruncateModalActive = true;
-        },
-
-        /*** close delete modal ***/
-        closeTruncateModal() {
-            this.isTruncateModalActive = false;
-        },
-
-        /*** open delete modal ***/
-        openUnArchiveModal(data) {
-            this.formData.id = data
-            this.isUnArchiveModalActive = true;
-        },
-
-        /*** close delete modal ***/
-        closeUnArchiveModal() {
-            this.isUnArchiveModalActive = false;
+        /*** single api ***/
+        async singleApi(data) {
+            try {
+                this.singleLoading = true;
+                const response = await axios.get(apiRoute.crud + '/' + data, this.formData, {headers: apiService.mediaHeaderContent});
+                this.formData = response?.data;
+                if (response?.data?.image) {
+                    this.attach_preview = `/storage/${response?.data?.image}`;
+                } else {
+                    this.attach_preview = null;
+                }
+            } catch (error) {
+                this.error = error?.response?.data?.errors;
+            } finally {
+                this.singleLoading = false;
+            }
         },
 
         /*** attach file ***/
@@ -635,22 +616,28 @@ export default {
             }
         },
 
-        /*** toggle dropdown as active dropdown index ***/
-        toggleDropdown(index) {
-            this.activeDropdownIndex = this.activeDropdownIndex === index ? null : index;
-        },
-
-        /*** is dropdown active dropdown index ***/
-        isDropdownActive(index) {
-            return this.activeDropdownIndex === index;
-        },
-
-        /*** handle click outside ***/
-        handleClickOutside() {
-            if (this.activeDropdownIndex !== null) {
-                this.activeDropdownIndex = null;
+        /*** update api ***/
+        async updateApi() {
+            try {
+                this.manageLoading = true;
+                let form = new FormData();
+                form.append('name', this.formData.name);
+                form.append('email', this.formData.email);
+                form.append('phone_number', this.formData.phone_number);
+                if (this.formData.image instanceof File) { form.append('image', this.formData.image); }
+                if (this.formData.remove_image) { form.append('remove_image', '1'); }
+                form.append('_method', 'PUT');
+                await axios.post(apiRoute.crud + '/' + this.formData.id, form, {headers: apiService.mediaHeaderContent});
+                this.closeManageModal();
+                await this.readApi();
+            } catch (error) {
+                this.error = error?.response?.data?.errors;
+            } finally {
+                this.manageLoading = false;
             }
         },
+
+        // === === === list Crud === === ===
 
         /*** read api all ***/
         async readApiAll() {
@@ -705,6 +692,23 @@ export default {
                 this.error = error?.response?.data?.errors;
             } finally {
                 this.loading = false;
+            }
+        },
+
+        /*** toggle dropdown as active dropdown index ***/
+        toggleDropdown(index) {
+            this.activeDropdownIndex = this.activeDropdownIndex === index ? null : index;
+        },
+
+        /*** is dropdown active dropdown index ***/
+        isDropdownActive(index) {
+            return this.activeDropdownIndex === index;
+        },
+
+        /*** handle click outside ***/
+        handleClickOutside() {
+            if (this.activeDropdownIndex !== null) {
+                this.activeDropdownIndex = null;
             }
         },
 
@@ -798,43 +802,18 @@ export default {
             }, 500);
         },
 
-        /*** single api ***/
-        async singleApi(data) {
-            try {
-                this.singleLoading = true;
-                const response = await axios.get(apiRoute.crud + '/' + data, this.formData, {headers: apiService.mediaHeaderContent});
-                this.formData = response?.data;
-                if (response?.data?.image) {
-                    this.attach_preview = `/storage/${response?.data?.image}`;
-                } else {
-                    this.attach_preview = null;
-                }
-            } catch (error) {
-                this.error = error?.response?.data?.errors;
-            } finally {
-                this.singleLoading = false;
-            }
+        // === === === delete Crud === === ===
+
+        /*** open delete modal ***/
+        openDeleteModal(data) {
+            this.formData.id = data
+            this.isDeleteModalActive = true;
         },
 
-        /*** update api ***/
-        async updateApi() {
-            try {
-                this.manageLoading = true;
-                let form = new FormData();
-                form.append('name', this.formData.name);
-                form.append('email', this.formData.email);
-                form.append('phone_number', this.formData.phone_number);
-                if (this.formData.image instanceof File) { form.append('image', this.formData.image); }
-                if (this.formData.remove_image) { form.append('remove_image', '1'); }
-                form.append('_method', 'PUT');
-                await axios.post(apiRoute.crud + '/' + this.formData.id, form, {headers: apiService.mediaHeaderContent});
-                this.closeManageModal();
-                await this.readApi();
-            } catch (error) {
-                this.error = error?.response?.data?.errors;
-            } finally {
-                this.manageLoading = false;
-            }
+        /*** close delete modal ***/
+        closeDeleteModal() {
+            this.isDeleteModalActive = false;
+            this.formData.remove_image = false;
         },
 
         /*** delete Maintain ***/
@@ -875,6 +854,19 @@ export default {
             }
         },
 
+        // === === === archive Crud === === ===
+
+        /*** open delete modal ***/
+        openArchiveModal(data) {
+            this.formData.id = data
+            this.isArchiveModalActive = true;
+        },
+
+        /*** close delete modal ***/
+        closeArchiveModal() {
+            this.isArchiveModalActive = false;
+        },
+
         /*** archive Maintain ***/
         archiveApi() {
             if(this.controlType === 'check') {
@@ -912,6 +904,19 @@ export default {
             } finally {
                 this.archiveLoading = false;
             }
+        },
+
+        // === === === unArchive Crud === === ===
+
+        /*** open delete modal ***/
+        openUnArchiveModal(data) {
+            this.formData.id = data
+            this.isUnArchiveModalActive = true;
+        },
+
+        /*** close delete modal ***/
+        closeUnArchiveModal() {
+            this.isUnArchiveModalActive = false;
         },
 
         /*** unArchive Maintain ***/
@@ -954,6 +959,18 @@ export default {
             }
         },
 
+        // === === === truncate Crud === === ===
+
+        /*** open delete modal ***/
+        openTruncateModal() {
+            this.isTruncateModalActive = true;
+        },
+
+        /*** close delete modal ***/
+        closeTruncateModal() {
+            this.isTruncateModalActive = false;
+        },
+
         /*** delete api ***/
         async truncateApi() {
             try {
@@ -969,6 +986,7 @@ export default {
         },
 
     }
+
 }
 
 </script>
