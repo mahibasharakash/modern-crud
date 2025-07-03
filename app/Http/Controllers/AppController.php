@@ -18,6 +18,7 @@ class AppController
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         $archived = $request->query('archived', 0);
+        $paginate = $request->query('paginate', 0);
         $query = User::query()->where('archived', $archived);
         if ($search = $request->query('search')) {
             $query->where(function ($q) use ($search) {
@@ -34,10 +35,15 @@ class AppController
         } else {
             $query->orderBy('id', $sortOrder);
         }
-        $limit = 20;
-        $perPage = (int) $request->query('per_page', $limit);
-        if ($perPage < 1) { $perPage = $limit; }
-        $users = $query->paginate($perPage);
+        if($paginate == 1){
+            $users = $query->get()->toArray();
+        }else {
+
+            $limit = 20;
+            $perPage = (int) $request->query('per_page', $limit);
+            if ($perPage < 1) { $perPage = $limit; }
+            $users = $query->paginate($perPage);
+        }
         return response()->json($users);
     }
 
@@ -110,6 +116,29 @@ class AppController
         $user->delete();
         return response()->json([
             'message' => 'User deleted successfully',
+        ]);
+    }
+
+    public function destroyBySelected(Request $request, $id = null): \Illuminate\Http\JsonResponse
+    {
+        $ids = [];
+        if ($request->has('ids')) {
+            $ids = is_array($request->ids) ? $request->ids : explode(',', $request->ids);
+        } elseif ($id !== null) {
+            $ids = [$id];
+        }
+        foreach ($ids as $userId) {
+            $user = User::find($userId);
+            if ($user) {
+                if ($user->image && Storage::disk('public')->exists($user->image)) {
+                    Storage::disk('public')->delete($user->image);
+                }
+                $user->delete();
+            }
+        }
+
+        return response()->json([
+            'message' => 'User(s) deleted successfully',
         ]);
     }
 

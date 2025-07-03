@@ -7,6 +7,22 @@
             <div class="text-[21px] font-bold mb-4 sm:mb-0"> Crud </div>
             <div class="flex justify-end gap-2 flex-wrap">
 
+                <template v-if="deleteSeperatedData">
+                    <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-red-300 duration-500 hover:bg-red-600 group inline-flex cursor-pointer justify-center items-center" @click="openDeleteModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                        </svg>
+                    </button>
+                </template>
+
+                <template v-if="clearAllData">
+                    <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-red-300 duration-500 hover:bg-red-600 group inline-flex cursor-pointer justify-center items-center" @click="openTruncateModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                        </svg>
+                    </button>
+                </template>
+
                 <input type="text" name="search" v-model="search" @input="searchData()" class="w-full text-[14px] w-full sm:min-w-[210px] sm:max-w-[210px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 appearance-none" required autocomplete="off" placeholder="Search Here" />
 
                 <div class="relative w-full sm:min-w-[90px] sm:max-w-[90px]">
@@ -81,7 +97,7 @@
                                 <th class="font-medium" colspan="4">
                                     <div class="flex justify-start items-center">
                                         <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-s-xl bg-gray-100 min-w-1/4">
-                                            Name
+                                            <input type="checkbox" :checked="clearAllData" @change="selectAllUser()"/> <span class="ms-3"> Name </span>
                                         </div>
                                         <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-0 bg-gray-100 min-w-1/4">
                                             Email
@@ -102,11 +118,14 @@
                                     <div class="flex justify-start items-center mt-2">
                                         <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-s-xl bg-gray-100 min-w-1/4">
                                             <div class="inline-flex justify-start items-center">
-                                                <div v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
-                                                    {{shortName(each.name)}}
-                                                </div>
-                                                <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] object-cover bg-cover rounded-full" alt="image" />
-                                                <span class="ms-3"> {{ each.name }} </span>
+                                                <input type="checkbox" :checked="checkIfChecked(each.id)" @change="selectUser(each.id)" />
+                                                <span class="ms-3 inline-flex justify-start items-center">
+                                                    <div v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
+                                                        {{shortName(each.name)}}
+                                                    </div>
+                                                    <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] object-cover bg-cover rounded-full" alt="image" />
+                                                    <span class="ms-3"> {{ each.name }} </span>
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-0 bg-gray-100 min-w-1/4">
@@ -433,6 +452,10 @@ export default {
             // single properties
             singleLoading: false,
 
+            // selector
+            clearAllData: false,
+            deleteSeperatedData: false,
+
             // table data properties
             tableData: [],
             activeDropdownIndex: null,
@@ -449,6 +472,7 @@ export default {
             sort_by: '',
             search: null,
             searchTimeout: null,
+            selectUserId: [],
 
             // form data properties
             formData: {
@@ -460,10 +484,12 @@ export default {
             },
             error: {},
             attach_preview: null,
+            allData: []
 
         }
     },
     async mounted() {
+        await this.readApiAll();
         await this.readApi(1);
     },
     beforeMount() {
@@ -571,7 +597,13 @@ export default {
         async createApi() {
             try {
                 this.manageLoading = true;
-                const response = await axios.post(apiRoute.crud, this.formData, {headers: apiService.mediaHeaderContent});
+                let form = new FormData();
+                form.append('name', this.formData.name);
+                form.append('email', this.formData.email);
+                form.append('phone_number', this.formData.phone_number);
+                if (this.formData.image instanceof File) { form.append('image', this.formData.image); }
+                if (this.formData.remove_image) { form.append('remove_image', '1'); }
+                const response = await axios.post(apiRoute.crud, form, {headers: apiService.mediaHeaderContent});
                 this.closeManageModal();
                 await this.readApi();
             } catch (error) {
@@ -598,6 +630,29 @@ export default {
             }
         },
 
+        /*** read api all ***/
+        async readApiAll() {
+            try {
+                this.loading = true;
+                const response = await axios.get(`${apiRoute.crud}`,
+                    {
+                        params:
+                            {
+                                paginate: 1
+                            },
+                        headers: apiService.headerContent
+                    }
+                );
+                const res = response.data;
+                this.allData = res;
+                console.log(this.allData);
+            } catch (error) {
+                this.error = error?.response?.data?.errors;
+            } finally {
+                this.loading = false;
+            }
+        },
+
         /*** read api ***/
         async readApi(page = 1) {
             try {
@@ -612,6 +667,7 @@ export default {
                                 sort_order: this.sort_order,
                                 search: this.search || '',
                                 archived: this.archived,
+                                paginate: 0
                             },
                         headers: apiService.headerContent
                     }
@@ -629,6 +685,40 @@ export default {
             } finally {
                 this.loading = false;
             }
+        },
+
+        /*** select all user to push all id ***/
+        selectAllUser() {
+            this.clearAllData = !this.clearAllData;
+            const currentPageIds = this.allData.map(item => item.id);
+            if (this.clearAllData) {
+                currentPageIds.forEach(id => {
+                    if (!this.selectUserId.includes(id)) {
+                        this.selectUserId.push(id);
+                    }
+                });
+            } else {
+                this.selectUserId = this.selectUserId.filter(id => !currentPageIds.includes(id));
+            }
+        },
+
+        /*** select user to push id ***/
+        selectUser(id) {
+            const index = this.selectUserId.indexOf(id);
+            if (index > -1) {
+                this.selectUserId.splice(index, 1);
+                if(this.selectUserId.length === 0) {
+                    this.deleteSeperatedData = false;
+                }
+            } else {
+                this.selectUserId.push(id);
+                this.deleteSeperatedData = true;
+            }
+        },
+
+        /*** check if checked ***/
+        checkIfChecked(id) {
+            return this.selectUserId.includes(id);
         },
 
         /*** short name ***/
@@ -729,12 +819,36 @@ export default {
             }
         },
 
+        /*** deleteMaintain ***/
+        deleteApi() {
+            if(this.deleteSeperatedData) {
+                this.selectedDeleteApi();
+            } else {
+                this.normalDeleteApi();
+            }
+        },
+
         /*** delete api ***/
-        async deleteApi() {
+        async normalDeleteApi() {
             try {
                 this.deleteLoading = true;
-                const response = await axios.delete(apiRoute.crud + '/' + this.formData.id, {headers: apiService.headerContent});
+                await axios.delete(apiRoute.crud + '/' + this.formData.id, {headers: apiService.headerContent});
                 this.closeDeleteModal();
+                await this.readApi();
+            } catch (error) {
+                this.error = error?.response?.data?.errors;
+            } finally {
+                this.deleteLoading = false;
+            }
+        },
+
+        /*** delete api ***/
+        async selectedDeleteApi() {
+            try {
+                this.deleteLoading = true;
+                await axios.post(apiRoute.crud+'/selected?ids='+this.selectUserId, {headers: apiService.headerContent});
+                this.closeDeleteModal();
+                this.deleteSeperatedData = false;
                 await this.readApi();
             } catch (error) {
                 this.error = error?.response?.data?.errors;
@@ -747,7 +861,7 @@ export default {
         async archiveApi() {
             try {
                 this.archiveLoading = true;
-                const response = await axios.post(apiRoute.crud + '/' + this.formData.id + '/archive', null, { headers: apiService.headerContent });
+                await axios.post(apiRoute.crud + '/' + this.formData.id + '/archive', null, { headers: apiService.headerContent });
                 this.closeArchiveModal();
                 await this.readApi();
             } catch (error) {
@@ -776,8 +890,9 @@ export default {
         async truncateApi() {
             try {
                 this.truncateLoading = true;
-                const response = await axios.post(apiRoute.crud + '/truncate', {headers: apiService.headerContent});
+                await axios.post(apiRoute.crud + '/truncate', {headers: apiService.headerContent});
                 this.closeTruncateModal();
+                this.clearAllData = false;
                 await this.readApi();
             } catch (error) {
                 this.error = error?.response?.data?.errors;

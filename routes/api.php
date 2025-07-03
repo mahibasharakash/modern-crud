@@ -16,6 +16,7 @@ use App\Http\Controllers\AppController;
 */
 
 Route::apiResource('users', AppController::class);
+Route::post('/users/selected', [AppController::class, 'destroyBySelected']);
 Route::post('/users/{id}/archive', [AppController::class, 'archive']);
 Route::post('/users/{id}/unArchive', [AppController::class, 'unArchive']);
 Route::post('/users/truncate', [AppController::class, 'clear']);
