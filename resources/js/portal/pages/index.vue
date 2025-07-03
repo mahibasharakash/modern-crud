@@ -9,7 +9,7 @@
             </div>
             <div class="flex justify-end gap-2 flex-wrap">
 
-                <template v-if="tableData.length > 0 && loading === false && selectUserId.length > 0">
+                <template v-if="tableData.length > 0 && !loading && selectUserId.length > 0">
                     <div class="flex justify-end items-center gap-3">
                         <button type="button" v-if="archived === 0" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-blue-200 duration-500 hover:bg-blue-600 group inline-flex cursor-pointer justify-center items-center" @click="openArchiveModal()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="stroke-blue-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
@@ -91,6 +91,7 @@
             </div>
         </div>
 
+        <!-- body -->
         <div class="w-full block">
 
             <template  v-if="!loading & tableData.length > 0">
@@ -143,9 +144,9 @@
                                                     </template>
                                                 </span>
                                                 <span class="ms-3 inline-flex justify-start items-center">
-                                                    <div v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
+                                                    <span v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
                                                         {{shortName(each.name)}}
-                                                    </div>
+                                                    </span>
                                                     <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] object-cover bg-cover rounded-full" alt="image" />
                                                     <span class="ms-3"> {{ each.name }} </span>
                                                 </span>
@@ -164,7 +165,7 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                                                     </svg>
                                                 </button>
-                                                <div class="absolute top-auto end-0 bg-gray-200 rounded-xl z-3 min-w-[150px] overflow-hidden" :class="{ 'max-h-[0]' : !isDropdownActive(index), 'max-h-[300px]' : isDropdownActive(index) }">
+                                                <div class="absolute top-auto end-0 bg-white mt-2 rounded-xl z-3 min-w-[150px] overflow-hidden duration-500 shadow-sm" :class="{ 'max-h-[0]' : !isDropdownActive(index), 'max-h-[300px]' : isDropdownActive(index) }">
                                                     <ul class="p-2">
                                                         <li>
                                                             <button type="button" v-if="archived === 1" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openUnArchiveModal(each.id)">
@@ -199,68 +200,6 @@
 
             </template>
 
-            <template v-if="!loading & tableData.length > 0">
-
-                <!-- pagination and count page -->
-                <div class="w-full flex justify-between gap-3 mt-5">
-
-                    <!-- pagination -->
-                    <div class="flex justify-center items-center gap-2">
-                        <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :class="{ 'pointer-events-none' : currentPage <= 1 }" @click="goPrevious()">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
-                            </svg>
-                        </button>
-                        <template v-if="pageCount <= 4">
-                            <button v-for="page in pageCount" :key="page" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
-                                {{ page }}
-                            </button>
-                        </template>
-                        <template v-else>
-                            <button type="button" :key="1" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="1 === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(1)">
-                                1
-                            </button>
-                            <template v-if="currentPage <= 3">
-                                <button v-for="page in [2,3]" :key="page" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
-                                    {{ page }}
-                                </button>
-                                <span class="px-2">…</span>
-                            </template>
-                            <template v-else-if="currentPage >= pageCount - 2">
-                                <span class="px-2">…</span>
-                                <button v-for="page in [pageCount - 2, pageCount - 1]" :key="page" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
-                                    {{ page }}
-                                </button>
-                            </template>
-                            <template v-else>
-                                <span class="px-2">…</span>
-                                <button :key="currentPage - 1" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="(currentPage - 1) === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(currentPage - 1)">
-                                    {{ currentPage - 1 }}
-                                </button>
-                                <button :key="currentPage" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="currentPage === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(currentPage)">
-                                    {{ currentPage }}
-                                </button>
-                                <span class="px-2">…</span>
-                            </template>
-                            <button :key="pageCount" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="pageCount === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(pageCount)">
-                                {{ pageCount }}
-                            </button>
-                        </template>
-                        <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :class="{ 'pointer-events-none' : currentPage >= pageCount }" @click="goNext()">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                 stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <!-- count page -->
-                    <div> {{ from }} – {{ to }} of {{ total }} </div>
-
-                </div>
-
-            </template>
-
             <div v-if="!loading & tableData.length === 0">
 
                 <!-- no records found -->
@@ -280,6 +219,69 @@
             </template>
 
         </div>
+
+        <!-- footer -->
+        <template v-if="!loading & tableData.length > 0">
+
+            <!-- pagination and count page -->
+            <div class="w-full flex justify-between gap-3 mt-5">
+
+                <!-- pagination -->
+                <div class="flex justify-center items-center gap-2">
+                    <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :class="{ 'pointer-events-none' : currentPage <= 1 }" @click="goPrevious()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
+                        </svg>
+                    </button>
+                    <template v-if="pageCount <= 4">
+                        <button v-for="page in pageCount" :key="page" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
+                            {{ page }}
+                        </button>
+                    </template>
+                    <template v-else>
+                        <button type="button" :key="1" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="1 === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(1)">
+                            1
+                        </button>
+                        <template v-if="currentPage <= 3">
+                            <button v-for="page in [2,3]" :key="page" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
+                                {{ page }}
+                            </button>
+                            <span class="px-2">…</span>
+                        </template>
+                        <template v-else-if="currentPage >= pageCount - 2">
+                            <span class="px-2">…</span>
+                            <button v-for="page in [pageCount - 2, pageCount - 1]" :key="page" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="page === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(page)">
+                                {{ page }}
+                            </button>
+                        </template>
+                        <template v-else>
+                            <span class="px-2">…</span>
+                            <button :key="currentPage - 1" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="(currentPage - 1) === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(currentPage - 1)">
+                                {{ currentPage - 1 }}
+                            </button>
+                            <button :key="currentPage" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="currentPage === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(currentPage)">
+                                {{ currentPage }}
+                            </button>
+                            <span class="px-2">…</span>
+                        </template>
+                        <button :key="pageCount" type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full outline-0" :class="pageCount === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'" @click="changePage(pageCount)">
+                            {{ pageCount }}
+                        </button>
+                    </template>
+                    <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :class="{ 'pointer-events-none' : currentPage >= pageCount }" @click="goNext()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                             stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- count page -->
+                <div> {{ from }} – {{ to }} of {{ total }} </div>
+
+            </div>
+
+        </template>
 
     </div>
 
