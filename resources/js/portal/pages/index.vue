@@ -89,7 +89,17 @@
                                 <th class="font-medium" colspan="4">
                                     <div class="flex justify-start items-center">
                                         <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-s-xl bg-gray-100 min-w-1/4">
-                                            <input type="checkbox" :checked="allData.length > 0 && allData.length === selectUserId.length" @change="selectAllUser($event)"/> <span class="ms-3"> Name </span>
+                                            <label for="check-all" class="inline-flex mb-0 justify-start items-center">
+                                                <input id="check-all" type="checkbox" hidden="hidden" :checked="allData.length > 0 && allData.length === selectUserId.length" @change="selectAllUser($event)">
+                                                <span class="min-w-[25px] min-h-[25px] max-w-[25px] max-h-[25px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400" :class="{ 'bg-white' : allData.length > 0 && allData.length === selectUserId.length }">
+                                                    <template v-if="allData.length > 0 && allData.length === selectUserId.length">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="4" stroke="currentColor" class="stroke-gray-600 min-w-[12px] min-h-[12px] max-w-[12px] max-h-[12px]">
+                                                          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                        </svg>
+                                                    </template>
+                                                </span>
+                                                <span class="ms-3"> Name </span>
+                                            </label>
                                         </div>
                                         <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-0 bg-gray-100 min-w-1/4">
                                             Email
