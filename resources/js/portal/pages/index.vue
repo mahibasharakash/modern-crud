@@ -3,13 +3,13 @@
     <div class="w-full px-10 mx-auto py-5">
 
         <!-- header -->
-        <div class="w-full flex justify-between items-center mb-5">
-            <div class="text-[21px] font-bold">
-                Crud
-            </div>
-            <div class="flex justify-end gap-2">
-                <input type="text" name="search" v-model="search" @input="searchData()" class="w-full text-[14px] min-w-[210px] max-w-[210px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 appearance-none" required autocomplete="off" placeholder="Search Here" />
-                <div class="relative min-w-[90px] max-w-[90px]">
+        <div class="w-full sm:flex justify-between items-center mb-5">
+            <div class="text-[21px] font-bold mb-4 sm:mb-0"> Crud </div>
+            <div class="flex justify-end gap-2 flex-wrap">
+
+                <input type="text" name="search" v-model="search" @input="searchData()" class="w-full text-[14px] w-full sm:min-w-[210px] sm:max-w-[210px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 appearance-none" required autocomplete="off" placeholder="Search Here" />
+
+                <div class="relative w-full sm:min-w-[90px] sm:max-w-[90px]">
                     <select name="limit" v-model="perPage" @change="limitChange()" class="w-full text-[14px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
                         <option v-for="n in limits" :key="n" :value="n"> {{ n }} </option>
                     </select>
@@ -19,7 +19,8 @@
                         </svg>
                     </div>
                 </div>
-                <div class="relative min-w-[210px] max-w-[210px]">
+
+                <div class="relative w-full sm:min-w-[210px] sm:max-w-[210px]">
                     <select name="sort_by" v-model="sort_by" @change="sortChange()" class="w-full text-[14px] text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
                         <option :value="''"> Select Sort Column </option>
                         <option :value="'name'"> Name </option>
@@ -32,7 +33,8 @@
                         </svg>
                     </div>
                 </div>
-                <div class="relative min-w-[210px] max-w-[210px]">
+
+                <div class="relative w-full sm:min-w-[210px] sm:max-w-[210px]">
                     <select name="archived" v-model="archived" @change="sortChange()" class="w-full text-[14px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
                         <option :value="0"> Normal List </option>
                         <option :value="1"> Archive List </option>
@@ -43,7 +45,8 @@
                         </svg>
                     </div>
                 </div>
-                <div class="relative min-w-[210px] max-w-[210px]">
+
+                <div class="relative w-full sm:min-w-[210px] sm:max-w-[210px]">
                     <select name="sort_order" v-model="sort_order" @change="sortChange()" class="w-full text-[14px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-gray-400 rounded-md px-3 cursor-pointer appearance-none">
                         <option value="asc"> Ascending </option>
                         <option value="desc"> Descending </option>
@@ -54,18 +57,23 @@
                         </svg>
                     </div>
                 </div>
-                <button type="button" class="bg-red-400 text-white outline-0 border-0 px-7 cursor-pointer py-2 inline-block rounded-lg text-white" @click="openTruncateModal()">
+
+                <button type="button" class="bg-red-400 text-white outline-0 border-0 w-full sm:max-w-[100px] sm:min-w-[100px] cursor-pointer py-2 inline-block rounded-lg text-white" @click="openTruncateModal()">
                     <span class="text-[14px]"> Clear </span>
                 </button>
-                <button type="button" class="bg-gray-700 text-white outline-0 border-0 px-7 cursor-pointer py-2 inline-block rounded-lg" @click="openManageModal(null)">
+
+                <button type="button" class="bg-gray-700 text-white outline-0 border-0 w-full sm:max-w-[100px] sm:min-w-[100px] cursor-pointer py-2 inline-block rounded-lg" @click="openManageModal(null)">
                     <span class="text-[14px]"> Create </span>
                 </button>
+
             </div>
         </div>
 
         <div class="w-full block">
 
             <template  v-if="!loading & tableData.length > 0">
+
+                <!-- table data -->
                 <div class="w-full max-h-[calc(100vh-250px)] min-h-[calc(100vh-250px)] overflow-y-auto pe-2">
                     <table class="table-auto w-full text-[14px]">
                         <thead>
@@ -146,10 +154,15 @@
                         </tbody>
                     </table>
                 </div>
+
             </template>
 
             <template v-if="!loading & tableData.length > 0">
+
+                <!-- pagination and count page -->
                 <div class="w-full flex justify-between gap-3 mt-5">
+
+                    <!-- pagination -->
                     <div class="flex justify-center items-center gap-2">
                         <button type="button" class="cursor-pointer min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] inline-flex justify-center items-center rounded-full bg-gray-200 outline-0" :disabled="currentPage <= 1" @click="goPrevious()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="min-w-[15px] min-h-[15px] max-w-[15px] max-h-[15px]">
@@ -198,20 +211,30 @@
                             </svg>
                         </button>
                     </div>
+
+                    <!-- count page -->
                     <div> {{ from }} – {{ to }} of {{ total }} </div>
+
                 </div>
+
             </template>
 
             <div v-if="!loading & tableData.length === 0">
+
+                <!-- no records found -->
                 <div class="w-full min-h-[calc(100vh-250px)] bg-gray-100 rounded-xl text-gray-600 font-semibold flex justify-center items-center">
                     No records found.
                 </div>
+
             </div>
 
             <template v-if="loading">
+
+                <!-- loading -->
                 <div class="w-full min-h-[calc(100vh-250px)] bg-gray-100 rounded-xl text-gray-600 font-semibold flex justify-center items-center">
                     <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-green-800 border-t-transparent animate-spin"></span>
                 </div>
+
             </template>
 
         </div>
@@ -223,9 +246,7 @@
         <form @submit.prevent="manageApi()" class="bg-white rounded-3xl w-full sm:max-w-[550px] sm:min-w-[550px] p-10 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isManageModalActive, '-translate-y-1/2 opacity-0' : !isManageModalActive }" @click.stop>
             <div class="flex justify-between items-center">
                 <div class="font-medium text-[21px]">
-                    <template v-if="!formData.id"> Create</template>
-                    <template v-if="formData.id"> Edit</template>
-                    Crud
+                    <template v-if="!formData.id"> Create</template> <template v-if="formData.id"> Edit</template> Crud
                 </div>
                 <button type="button" class="bg-transparent duration-500 hover:bg-gray-200 text-white min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-full inline-flex justify-center items-center cursor-pointer" @click="closeManageModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#000" class="min-w-[20px] max-w-[20px] min-h-[20px] max-h-[20px]">
@@ -271,8 +292,12 @@
                     Cancel
                 </button>
                 <button type="submit" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="!manageLoading">
-                    <template v-if="!formData.id"> Save</template>
-                    <template v-if="formData.id"> Update</template>
+                    <template v-if="!formData.id">
+                        Save
+                    </template>
+                    <template v-if="formData.id">
+                        Update
+                    </template>
                 </button>
                 <button type="button" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[12px] font-medium cursor-pointer" v-if="manageLoading">
                     <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-green-800 border-t-transparent animate-spin"></span>
@@ -384,26 +409,34 @@ import apiService from '../../apiController/apiService.js';
 export default {
     data() {
         return {
+
+            // manage properties
             isManageModalActive: false,
-            isDeleteModalActive: false,
-            isArchiveModalActive: false,
-            isTruncateModalActive: false,
-            isUnArchiveModalActive: false,
             manageLoading: false,
+
+            // delete properties
+            isDeleteModalActive: false,
             deleteLoading: false,
+
+            // archive properties
+            isArchiveModalActive: false,
             archiveLoading: false,
+
+            // truncate properties
+            isTruncateModalActive: false,
             truncateLoading: false,
-            singleLoading: false,
+
+            // un archive properties
+            isUnArchiveModalActive: false,
             unArchiveLoading: false,
-            loading: false,
-            formData: {
-                id: null,
-                image: null,
-                name: '',
-                email: '',
-                phone_number: '',
-            },
+
+            // single properties
+            singleLoading: false,
+
+            // table data properties
             tableData: [],
+            activeDropdownIndex: null,
+            loading: false,
             currentPage: 1,
             perPage: 20,
             limits: Array.from({ length: 10 }, (_, i) => (i + 1) * 20),
@@ -416,9 +449,18 @@ export default {
             sort_by: '',
             search: null,
             searchTimeout: null,
+
+            // form data properties
+            formData: {
+                id: null,
+                image: null,
+                name: '',
+                email: '',
+                phone_number: '',
+            },
             error: {},
             attach_preview: null,
-            activeDropdownIndex: null,
+
         }
     },
     async mounted() {
@@ -445,6 +487,7 @@ export default {
                     name: '',
                     email: '',
                     phone_number: '',
+                    remove_image: false,
                 }
             }
             this.error = {};

@@ -22,14 +22,13 @@ class AppController
         if ($search = $request->query('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('email', 'LIKE', "%{$search}%")
-                    ->orWhere('phone_number', 'LIKE', "%{$search}%");
+                  ->orWhere('email', 'LIKE', "%{$search}%")
+                  ->orWhere('phone_number', 'LIKE', "%{$search}%");
             });
         }
         $sortBy = $request->query('sort_by');
         $sortOrder = strtolower($request->query('sort_order', 'asc')) === 'desc' ? 'desc' : 'asc';
         $allowedSorts = ['id', 'name', 'email', 'phone_number'];
-
         if (in_array($sortBy, $allowedSorts)) {
             $query->orderBy($sortBy, $sortOrder);
         } else {
@@ -37,9 +36,7 @@ class AppController
         }
         $limit = 20;
         $perPage = (int) $request->query('per_page', $limit);
-        if ($perPage < 1) {
-            $perPage = $limit;
-        }
+        if ($perPage < 1) { $perPage = $limit; }
         $users = $query->paginate($perPage);
         return response()->json($users);
     }
@@ -50,18 +47,16 @@ class AppController
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'phone_number' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable',
+            'remove_image' => 'nullable|boolean',
         ]);
-
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = Str::uuid().'.'.$image->getClientOriginalExtension();
             $path = $image->storeAs('images', $filename, 'public');
             $validated['image'] = $path;
         }
-
         $user = User::create($validated);
-
         return response()->json([
             'message' => 'User created successfully',
             'data' => $user,
@@ -123,7 +118,6 @@ class AppController
         $user = User::findOrFail($id);
         $user->archived = true;
         $user->save();
-
         return response()->json([
             'message' => 'User archived successfully.',
         ]);
@@ -134,7 +128,6 @@ class AppController
         $user = User::findOrFail($id);
         $user->archived = false;
         $user->save();
-
         return response()->json([
             'message' => 'User unarchived successfully.',
         ]);
