@@ -143,6 +143,7 @@
 import axios from "axios";
 import apiRoute from "../../apiController/apiRoute.js";
 import apiService from "../../apiController/apiService.js";
+import cookiesServices from "../../apiController/cookiesServices.js";
 
 export default {
     data() {
@@ -219,7 +220,12 @@ export default {
                 this.profileData = response?.data?.user;
                 this.profileParam = JSON.parse(JSON.stringify(response?.data?.user));
             } catch (error) {
-                this.error = error.response.data.errors;
+                if(error.response.data.message) {
+                    cookiesServices.remove('auth_token')
+                    this.$router.push({name: 'login'});
+                } else if(error.response.data.errors) {
+                    this.error = error.response.data.errors;
+                }
             } finally {
                 this.getLoading = false;
             }
