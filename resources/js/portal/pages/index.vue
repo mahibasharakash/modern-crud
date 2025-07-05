@@ -91,122 +91,104 @@
             </div>
         </div>
 
-        <div class="w-full flex justify-start items-center gap-2">
-            <router-link :to="{name:'login'}" class="decoration-0 text-black">
-                login
-            </router-link>
-            <router-link :to="{name:'registration'}" class="decoration-0 text-black">
-                registration
-            </router-link>
-            <router-link :to="{name:'forgot'}" class="decoration-0 text-black">
-                forgot
-            </router-link>
-            <router-link :to="{name:'reset'}" class="decoration-0 text-black">
-                reset
-            </router-link>
-            <router-link :to="{name:'verification'}" class="decoration-0 text-black">
-                verification
-            </router-link>
-        </div>
-
         <template v-if="!loading & tableData.length > 0">
 
             <!-- table data -->
             <div class="w-full max-h-[calc(100vh-200px)] min-h-[calc(100vh-200px)] overflow-y-auto pe-2">
                 <table class="table-auto w-full text-[14px]">
                     <thead>
-                    <tr>
-                        <th class="font-medium text-[14px]" colspan="4">
-                            <div class="flex justify-start items-center">
-                                <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-s-xl bg-gray-100 min-w-1/4">
-                                    <label for="check-all" class="inline-flex mb-0 justify-start items-center">
-                                        <input id="check-all" type="checkbox" hidden="hidden" :checked="allData.length > 0 && allData.length === selectUserId.length" @change="selectAllUser($event)">
-                                        <span class="min-w-[20px] min-h-[20px] max-w-[20px] max-h-[20px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400">
-                                            <svg v-if="allData.length > 0 && allData.length === selectUserId.length" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[14px] min-h-[14px] max-w-[14px] max-h-[14px]">
-                                                          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                                        </svg>
-                                        </span>
-                                        <span class="ms-3"> Name </span>
-                                    </label>
-                                </div>
-                                <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-0 bg-gray-100 min-w-1/4">
-                                    Email
-                                </div>
-                                <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-0 bg-gray-100 min-w-1/4">
-                                    Phone Number
-                                </div>
-                                <div class="px-5 max-h-[70px] min-h-[70px] flex justify-end items-center rounded-e-xl bg-gray-100 min-w-1/4">
-                                    Action
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(each, index) in tableData" :key="each.id">
-                        <td class="font-normal text-[14px]" colspan="4">
-                            <div class="flex justify-start items-center mt-2">
-                                <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-s-xl bg-gray-100 min-w-1/4">
-                                    <label :for="'check-separated-'+each.id" class="inline-flex mb-0 justify-start items-center">
-                                        <input :id="'check-separated-'+each.id" type="checkbox" hidden="hidden" :checked="checkIfChecked(each.id)" @change="selectUser($event, each.id)">
-                                        <span class="min-w-[20px] min-h-[20px] max-w-[20px] max-h-[20px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400">
-                                            <template v-if="checkIfChecked(each.id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[14px] min-h-[14px] max-w-[14px] max-h-[14px]">
+                        <tr>
+                            <th class="font-medium text-[14px]" colspan="4">
+                                <div class="flex justify-start items-center">
+                                    <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-s-xl bg-gray-100 min-w-1/4">
+                                        <label for="check-all" class="inline-flex mb-0 justify-start items-center">
+                                            <input id="check-all" type="checkbox" hidden="hidden" :checked="allData.length > 0 && allData.length === selectUserId.length" @change="selectAllUser($event)">
+                                            <span class="min-w-[20px] min-h-[20px] max-w-[20px] max-h-[20px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400">
+                                                <svg v-if="allData.length > 0 && allData.length === selectUserId.length" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[14px] min-h-[14px] max-w-[14px] max-h-[14px]">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                                 </svg>
-                                            </template>
-                                        </span>
-                                        <span class="ms-3 inline-flex justify-start items-center">
-                                            <span v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
-                                                {{shortName(each.name)}}
                                             </span>
-                                            <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] object-cover bg-cover rounded-full" alt="image" />
-                                            <span class="ms-3"> {{ each.name }} </span>
-                                        </span>
-                                    </label>
+                                            <span class="ms-3"> Name </span>
+                                        </label>
+                                    </div>
+                                    <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-0 bg-gray-100 min-w-1/4">
+                                        Email
+                                    </div>
+                                    <div class="px-5 max-h-[70px] min-h-[70px] flex justify-start items-center rounded-0 bg-gray-100 min-w-1/4">
+                                        Phone Number
+                                    </div>
+                                    <div class="px-5 max-h-[70px] min-h-[70px] flex justify-end items-center rounded-e-xl bg-gray-100 min-w-1/4">
+                                        Action
+                                    </div>
                                 </div>
-                                <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-0 bg-gray-100 min-w-1/4">
-                                    {{ each.email }}
-                                </div>
-                                <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-0 bg-gray-100 min-w-1/4">
-                                    {{ each.phone_number }}
-                                </div>
-                                <div class="px-5 flex justify-end items-center max-h-[70px] min-h-[70px] rounded-e-xl bg-gray-100 min-w-1/4">
-                                    <div class="relative">
-                                        <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] bg-gray-200 duration-500 hover:bg-gray-900 group inline-flex justify-center items-center rounded-full cursor-pointer" @click.stop="toggleDropdown(index)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-gray-600 duration-500 group-hover:stroke-white min-w-[18px] max-w-[18px] min-h-[18px] max-h-[18px]">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
-                                            </svg>
-                                        </button>
-                                        <div class="absolute top-auto end-0 bg-white mt-2 rounded-xl z-3 min-w-[150px] overflow-hidden duration-500 shadow-sm" :class="{ 'max-h-[0]' : !isDropdownActive(index), 'max-h-[300px]' : isDropdownActive(index) }">
-                                            <ul class="p-2">
-                                                <li>
-                                                    <button type="button" v-if="archived === 1" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openUnArchiveModal(each.id)">
-                                                        UnArchive
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openArchiveModal(each.id)">
-                                                        Archive
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openManageModal(each.id)">
-                                                        Edit
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openDeleteModal(each.id)">
-                                                        Delete
-                                                    </button>
-                                                </li>
-                                            </ul>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(each, index) in tableData" :key="each.id">
+                            <td class="font-normal text-[14px]" colspan="4">
+                                <div class="flex justify-start items-center mt-2">
+                                    <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-s-xl bg-gray-100 min-w-1/4">
+                                        <label :for="'check-separated-'+each.id" class="inline-flex mb-0 justify-start items-center">
+                                            <input :id="'check-separated-'+each.id" type="checkbox" hidden="hidden" :checked="checkIfChecked(each.id)" @change="selectUser($event, each.id)">
+                                            <span class="min-w-[20px] min-h-[20px] max-w-[20px] max-h-[20px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400">
+                                                <template v-if="checkIfChecked(each.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[14px] min-h-[14px] max-w-[14px] max-h-[14px]">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                    </svg>
+                                                </template>
+                                            </span>
+                                            <span class="ms-3 inline-flex justify-start items-center">
+                                                <span v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
+                                                    {{shortName(each.name)}}
+                                                </span>
+                                                <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] object-cover bg-cover rounded-full" alt="image" />
+                                                <span class="ms-3"> {{ each.name }} </span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-0 bg-gray-100 min-w-1/4">
+                                        {{ each.email }}
+                                    </div>
+                                    <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-0 bg-gray-100 min-w-1/4">
+                                        {{ each.phone_number }}
+                                    </div>
+                                    <div class="px-5 flex justify-end items-center max-h-[70px] min-h-[70px] rounded-e-xl bg-gray-100 min-w-1/4">
+                                        <div class="relative">
+                                            <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] bg-gray-200 duration-500 hover:bg-gray-900 group inline-flex justify-center items-center rounded-full cursor-pointer" @click.stop="toggleDropdown(index)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-gray-600 duration-500 group-hover:stroke-white min-w-[18px] max-w-[18px] min-h-[18px] max-h-[18px]">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                                                </svg>
+                                            </button>
+                                            <div class="absolute top-auto end-0 bg-white mt-2 rounded-xl z-3 min-w-[150px] overflow-hidden duration-500 shadow-sm" :class="{ 'max-h-[0]' : !isDropdownActive(index), 'max-h-[300px]' : isDropdownActive(index) }">
+                                                <ul class="p-2">
+                                                    <li>
+                                                        <button type="button" v-if="archived === 1" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openUnArchiveModal(each.id)">
+                                                            UnArchive
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openArchiveModal(each.id)">
+                                                            Archive
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openManageModal(each.id)">
+                                                            Edit
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openDeleteModal(each.id)">
+                                                            Delete
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -299,7 +281,9 @@
         <form @submit.prevent="manageApi()" class="bg-white rounded-3xl w-full sm:max-w-[550px] sm:min-w-[550px] p-10 duration-500 origin-top" :class="{ 'translate-y-0 opacity-100' : isManageModalActive, '-translate-y-1/2 opacity-0' : !isManageModalActive }" @click.stop>
             <div class="flex justify-between items-center">
                 <div class="font-medium text-[21px]">
-                    <template v-if="!formData.id"> Create</template> <template v-if="formData.id"> Edit</template> Crud
+                    <template v-if="!formData.id"> Create</template>
+                    <template v-if="formData.id"> Edit</template>
+                    Crud
                 </div>
                 <button type="button" class="bg-transparent duration-500 hover:bg-gray-200 text-white min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-full inline-flex justify-center items-center cursor-pointer" @click="closeManageModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#000" class="min-w-[20px] max-w-[20px] min-h-[20px] max-h-[20px]">
@@ -345,12 +329,8 @@
                     Cancel
                 </button>
                 <button type="submit" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="!manageLoading">
-                    <template v-if="!formData.id">
-                        Save
-                    </template>
-                    <template v-if="formData.id">
-                        Update
-                    </template>
+                    <template v-if="!formData.id"> Save </template>
+                    <template v-if="formData.id"> Update </template>
                 </button>
                 <button type="button" class="bg-green-200 duration-500 inline-flex justify-center items-center gap-1 hover:bg-green-300 text-green-800 min-h-[45px] max-h-[45px] min-w-[100px] max-w-[100px] rounded-xl text-[14px] font-medium cursor-pointer" v-if="manageLoading">
                     <span class="inline-block rounded-full min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] border-2 border-green-800 border-t-transparent animate-spin"></span>
@@ -460,14 +440,6 @@ import apiRoute from '../../apiController/apiRoute.js';
 import apiService from '../../apiController/apiService.js';
 
 export default {
-    computed: {
-        isAllChecked() {
-            return this.allData.length > 0 && this.allData.length === this.selectUserId.length;
-        },
-        isIndeterminate() {
-            return this.selectUserId.length > 0 && this.selectUserId.length < this.allData.length;
-        }
-    },
     data() {
         return {
             // Data Properties
