@@ -16,3 +16,4 @@ use App\Http\Controllers\AppController;
 */
 
 Route::get('/', [AppController::class, 'app'])->where('any', '.*')->name('lvs.user');
+Route::get('/{any}', [AppController::class, 'app'])->where('any', '.*')->name('lvs.user.any');

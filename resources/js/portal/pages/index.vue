@@ -91,6 +91,24 @@
             </div>
         </div>
 
+        <div class="w-full flex justify-start items-center gap-2">
+            <router-link :to="{name:'login'}" class="decoration-0 text-black">
+                login
+            </router-link>
+            <router-link :to="{name:'registration'}" class="decoration-0 text-black">
+                registration
+            </router-link>
+            <router-link :to="{name:'forgot'}" class="decoration-0 text-black">
+                forgot
+            </router-link>
+            <router-link :to="{name:'reset'}" class="decoration-0 text-black">
+                reset
+            </router-link>
+            <router-link :to="{name:'verification'}" class="decoration-0 text-black">
+                verification
+            </router-link>
+        </div>
+
         <template v-if="!loading & tableData.length > 0">
 
             <!-- table data -->
@@ -132,19 +150,19 @@
                                     <label :for="'check-separated-'+each.id" class="inline-flex mb-0 justify-start items-center">
                                         <input :id="'check-separated-'+each.id" type="checkbox" hidden="hidden" :checked="checkIfChecked(each.id)" @change="selectUser($event, each.id)">
                                         <span class="min-w-[20px] min-h-[20px] max-w-[20px] max-h-[20px] p-0 m-0 inline-flex justify-center items-center rounded-md border border-gray-400">
-                                                    <template v-if="checkIfChecked(each.id)">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[14px] min-h-[14px] max-w-[14px] max-h-[14px]">
-                                                          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                                        </svg>
-                                                    </template>
-                                                </span>
+                                            <template v-if="checkIfChecked(each.id)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="6" stroke="currentColor" class="stroke-gray-600 min-w-[14px] min-h-[14px] max-w-[14px] max-h-[14px]">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                </svg>
+                                            </template>
+                                        </span>
                                         <span class="ms-3 inline-flex justify-start items-center">
-                                                    <span v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
-                                                        {{shortName(each.name)}}
-                                                    </span>
-                                                    <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] object-cover bg-cover rounded-full" alt="image" />
-                                                    <span class="ms-3"> {{ each.name }} </span>
-                                                </span>
+                                            <span v-if="!each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] bg-gray-300 rounded-full text-[15px] inline-flex justify-center items-center">
+                                                {{shortName(each.name)}}
+                                            </span>
+                                            <img v-if="each.image" :src="'storage/'+each.image" class="min-w-[55px] min-h-[55px] max-w-[55px] max-h-[55px] object-cover bg-cover rounded-full" alt="image" />
+                                            <span class="ms-3"> {{ each.name }} </span>
+                                        </span>
                                     </label>
                                 </div>
                                 <div class="px-5 flex justify-start items-center max-h-[70px] min-h-[70px] rounded-0 bg-gray-100 min-w-1/4">
