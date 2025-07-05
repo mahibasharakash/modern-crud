@@ -8,14 +8,22 @@
                     <span class="text-[35px]"> {{shortName(profileData?.name)}} </span>
                 </div>
             </div>
-            <div class="mb-2 block font-semibold"> Full Name </div>
-            <div class="mb-2 block font-medium"> {{profileData?.name ?? 'N/A'}} </div>
-            <div class="mb-2 block font-semibold"> Email </div>
-            <div class="mb-2 block font-medium"> {{profileData?.email ?? 'N/A'}} </div>
-            <div class="mb-2 block font-semibold"> Phone Number </div>
-            <div class="mb-2 block font-medium"> {{profileData?.phone_number ?? 'N/A'}} </div>
-            <div class="mb-2 block font-semibold"> Address </div>
-            <div class="mb-2 block font-medium"> {{profileData?.address ?? 'N/A'}} </div>
+            <div class="w-full mb-3 block">
+                <div class="w-full block font-semibold"> Full Name </div>
+                <div class="w-full block font-medium"> {{profileData?.name ?? 'N/A'}} </div>
+            </div>
+            <div class="w-full mb-3 block">
+                <div class="w-full block font-semibold"> Email </div>
+                <div class="w-full block font-medium"> {{profileData?.email ?? 'N/A'}} </div>
+            </div>
+            <div class="w-full mb-3 block">
+                <div class="w-full block font-semibold"> Phone Number </div>
+                <div class="w-full block font-medium"> {{profileData?.phone_number ?? 'N/A'}} </div>
+            </div>
+            <div class="w-full mb-3 block">
+                <div class="w-full block font-semibold"> Address </div>
+                <div class="w-full block font-medium"> {{profileData?.address ?? 'N/A'}} </div>
+            </div>
             <div class="w-full flex justify-between items-center gap-2 font-semibold">
                 <button type="button" class="cursor-pointer bg-gray-200 duration-500 hover:bg-gray-800 hover:text-white flex justify-center items-center w-full min-h-[45px] max-h-[45px] rounded-xl" @click="openEditProfileModal()">
                     Edit Profile
@@ -153,6 +161,7 @@ export default {
                 phone_number: '',
                 image: null,
                 address: '',
+                remove_image: false,
             },
             passwordParam: {
                 current_password: '',
@@ -169,7 +178,11 @@ export default {
 
         openEditProfileModal() {
             this.error = {};
-            this.attach_preview = `/storage/${this.profileParam?.image}`;
+            if(this.profileParam.image !== null) {
+                this.attach_preview = `/storage/${this.profileParam?.image}`;
+            } else {
+                this.attach_preview = null;
+            }
             this.isActiveEditDetails = true;
         },
 
@@ -197,6 +210,7 @@ export default {
         removeFile() {
             this.attach_preview = null;
             this.profileParam.image = null;
+            this.profileParam.remove_image = true;
         },
 
         async getProfileApi() {
