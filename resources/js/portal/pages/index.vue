@@ -11,17 +11,17 @@
 
                 <template v-if="tableData.length > 0 && !loading && selectUserId.length > 0">
                     <div class="flex justify-end items-center gap-3">
-                        <button type="button" v-if="archived === 0" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-blue-200 duration-500 hover:bg-blue-600 group inline-flex cursor-pointer justify-center items-center" @click="openArchiveModal()">
+                        <button type="button" v-if="archived === 0" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-blue-200 duration-500 hover:bg-blue-600 group inline-flex cursor-pointer justify-center items-center" @click="openArchiveModal('check')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="stroke-blue-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                             </svg>
                         </button>
-                        <button type="button" v-if="archived === 1" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-blue-200 duration-500 hover:bg-blue-600 group inline-flex cursor-pointer justify-center items-center" @click="openUnArchiveModal()">
+                        <button type="button" v-if="archived === 1" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-blue-200 duration-500 hover:bg-blue-600 group inline-flex cursor-pointer justify-center items-center" @click="openUnArchiveModal('check')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="stroke-blue-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                             </svg>
                         </button>
-                        <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-red-300 duration-500 hover:bg-red-600 group inline-flex cursor-pointer justify-center items-center" @click="openDeleteModal()">
+                        <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] rounded-lg bg-red-300 duration-500 hover:bg-red-600 group inline-flex cursor-pointer justify-center items-center" @click="openDeleteModal('check')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-500 duration-500 group-hover:stroke-white min-w-[21px] max-w-[21px] min-h-[21px] max-h-[21px]">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
                             </svg>
@@ -163,22 +163,22 @@
                                             <div class="absolute top-auto end-0 bg-white mt-2 rounded-xl z-3 min-w-[150px] overflow-hidden duration-500 shadow-sm" :class="{ 'max-h-[0]' : !isDropdownActive(index), 'max-h-[300px]' : isDropdownActive(index) }">
                                                 <ul class="p-2">
                                                     <li>
-                                                        <button type="button" v-if="archived === 1" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openUnArchiveModal(each.id)">
+                                                        <button type="button" v-if="archived === 1" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openUnArchiveModal('uncheck', each.id)">
                                                             UnArchive
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openArchiveModal(each.id)">
+                                                        <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openArchiveModal('uncheck', each.id)">
                                                             Archive
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openManageModal(each.id)">
+                                                        <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openManageModal('uncheck', each.id)">
                                                             Edit
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openDeleteModal(each.id)">
+                                                        <button type="button" v-if="archived === 0" class="w-full outline-0 text-start cursor-pointer py-2 px-3 block duration-500 bg-transparent duration-500 hover:bg-gray-300 rounded-md" @click="openDeleteModal('uncheck', each.id)">
                                                             Delete
                                                         </button>
                                                     </li>
@@ -317,6 +317,16 @@
                     <label for="email" class="block mb-1 text-[13px] font-medium"> Email </label>
                     <input id="email" type="email" name="email" v-model="formData.email" class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3" autocomplete="off"/>
                     <div class="text-rose-600 mt-2 text-[14px] font-medium" v-if="error?.email"> {{ error?.email[0] }} </div>
+                </div>
+                <div class="w-full block mb-3">
+                    <label for="password" class="block mb-1 text-[13px] font-medium"> Password </label>
+                    <input id="password" type="password" name="password" v-model="formData.password" class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3" autocomplete="off"/>
+                    <div class="text-rose-600 mt-2 text-[14px] font-medium" v-if="error?.password"> {{ error?.password[0] }} </div>
+                </div>
+                <div class="w-full block mb-3">
+                    <label for="password_confirmation" class="block mb-1 text-[13px] font-medium"> Password Confirmation </label>
+                    <input id="password_confirmation" type="password" name="password_confirmation" v-model="formData.password_confirmation" class="w-full text-[13px] border border-gray-200 min-h-[45px] max-h-[45px] duration-500 ring-0 outline-0 focus-within:ring-2 focus-within:ring-blue-400 rounded-md px-3" autocomplete="off"/>
+                    <div class="text-rose-600 mt-2 text-[14px] font-medium" v-if="error?.password_confirmation"> {{ error?.password_confirmation[0] }} </div>
                 </div>
                 <div class="w-full block">
                     <label for="phone_number" class="block mb-1 text-[13px] font-medium"> Phone Number </label>
@@ -477,6 +487,8 @@ export default {
                 image: null,
                 name: '',
                 email: '',
+                password: '',
+                password_confirmation: '',
                 phone_number: '',
             },
             error: {},
@@ -484,7 +496,6 @@ export default {
         }
     },
     async mounted() {
-        await this.readApiAll();
         await this.readApi(1);
     },
     beforeMount() {
@@ -509,6 +520,8 @@ export default {
                     image: null,
                     name: '',
                     email: '',
+                    password: '',
+                    password_confirmation: '',
                     phone_number: '',
                     remove_image: false,
                 }
@@ -529,6 +542,8 @@ export default {
                 this.singleLoading = true;
                 const response = await axios.get(apiRoute.crud + '/' + data, this.formData, {headers: apiService.mediaHeaderContent});
                 this.formData = response?.data;
+                this.formData.password = null;
+                this.formData.password_confirmation = null;
                 if (response?.data?.image) {
                     this.attach_preview = `/storage/${response?.data?.image}`;
                 } else {
@@ -571,6 +586,8 @@ export default {
                 let form = new FormData();
                 form.append('name', this.formData.name);
                 form.append('email', this.formData.email);
+                form.append('password', this.formData.password);
+                form.append('password_confirmation', this.formData.password_confirmation);
                 form.append('phone_number', this.formData.phone_number);
                 if (this.formData.image instanceof File) { form.append('image', this.formData.image); }
                 if (this.formData.remove_image) { form.append('remove_image', '1'); }
@@ -591,6 +608,8 @@ export default {
                 let form = new FormData();
                 form.append('name', this.formData.name);
                 form.append('email', this.formData.email);
+                form.append('password', this.formData.password);
+                form.append('password_confirmation', this.formData.password_confirmation);
                 form.append('phone_number', this.formData.phone_number);
                 if (this.formData.image instanceof File) { form.append('image', this.formData.image); }
                 if (this.formData.remove_image) { form.append('remove_image', '1'); }
@@ -610,7 +629,6 @@ export default {
         /*** read api all ***/
         async readApiAll() {
             try {
-                this.loading = true;
                 const response = await axios.get(`${apiRoute.crud}`,
                     {
                         params:
@@ -656,6 +674,7 @@ export default {
                 this.from = Number(res.from) || 0;
                 this.to = Number(res.to) || 0;
                 this.pageCount = Math.max(1, Number(res.last_page));
+                await this.readApiAll();
             } catch (error) {
                 this.error = error?.response?.data?.errors;
             } finally {
@@ -696,11 +715,13 @@ export default {
         selectUser(e, id) {
             if (e.target.checked) {
                 if (!this.selectUserId.includes(id)) {
+                    this.controlType = 'check';
                     this.selectUserId.push(id);
                 }
             } else {
                 const index = this.selectUserId.indexOf(id);
                 if (index > -1) {
+                    this.controlType = 'check';
                     this.selectUserId.splice(index, 1);
                 }
             }
@@ -775,8 +796,13 @@ export default {
         // === === === delete Crud === === ===
 
         /*** open delete modal ***/
-        openDeleteModal(data) {
-            this.formData.id = data
+        openDeleteModal(type, data = null) {
+            this.controlType = type;
+            if (type === 'uncheck') {
+                this.formData.id = data;
+            } else {
+                this.formData.id = null;
+            }
             this.isDeleteModalActive = true;
         },
 
@@ -790,7 +816,7 @@ export default {
         deleteApi() {
             if(this.controlType === 'check') {
                 this.selectedDeleteApi();
-            } else {
+            } else if(this.controlType === 'uncheck'){
                 this.normalDeleteApi();
             }
         },
@@ -827,8 +853,13 @@ export default {
         // === === === archive Crud === === ===
 
         /*** open delete modal ***/
-        openArchiveModal(data) {
-            this.formData.id = data
+        openArchiveModal(type, data = null) {
+            this.controlType = type;
+            if (type === 'uncheck') {
+                this.formData.id = data;
+            } else {
+                this.formData.id = null;
+            }
             this.isArchiveModalActive = true;
         },
 
@@ -841,7 +872,7 @@ export default {
         archiveApi() {
             if(this.controlType === 'check') {
                 this.selectArchiveApi();
-            } else {
+            } else if(this.controlType === 'uncheck') {
                 this.normalArchiveApi();
             }
         },
@@ -879,8 +910,13 @@ export default {
         // === === === unArchive Crud === === ===
 
         /*** open delete modal ***/
-        openUnArchiveModal(data) {
-            this.formData.id = data
+        openUnArchiveModal(type, data = null) {
+            this.controlType = type;
+            if (type === 'uncheck') {
+                this.formData.id = data;
+            } else {
+                this.formData.id = null;
+            }
             this.isUnArchiveModalActive = true;
         },
 
@@ -893,7 +929,7 @@ export default {
         unArchiveApi() {
             if(this.controlType === 'check') {
                 this.selectUnArchiveApi();
-            } else {
+            } else if(this.controlType === 'uncheck') {
                 this.normalUnArchiveApi();
             }
         },

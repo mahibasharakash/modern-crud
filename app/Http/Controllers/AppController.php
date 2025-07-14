@@ -52,6 +52,7 @@ class AppController
         $validated = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
             'phone_number' => 'nullable|string',
             'image' => 'nullable',
             'remove_image' => 'nullable|boolean',
