@@ -52,7 +52,7 @@
                     <span class="text-[14px] font-medium"> Upload File </span>
                 </label>
                 <div class="relative" v-if="attach_preview">
-                    <img :src="attach_preview" class="min-w-[190px] max-w-[190px] min-h-[190px] max-h-[190px] rounded-full cursor-pointer bg-gray-200 duration-500 hover:bg-gray-300 max-h-[250px] object-cover bg-cover" alt="uploaded-image"/>
+                    <img :src="attach_preview" class="min-w-[190px] max-w-[190px] min-h-[190px] max-h-[190px] rounded-full cursor-pointer bg-gray-200 duration-500 hover:bg-gray-300 object-cover bg-cover" alt="uploaded-image"/>
                     <div class="absolute inset-0 w-full h-full flex justify-center items-center bg-white/25">
                         <button type="button" class="min-w-[45px] max-w-[45px] min-h-[45px] max-h-[45px] bg-rose-200 inline-flex justify-center items-center rounded-full cursor-pointer" @click="removeFile()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="stroke-rose-600 min-w-[15px] max-w-[15px] min-h-[15px] max-h-[15px]">
