@@ -12,10 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             User::create([
                 'name' => fake()->name(),
                 'email' => fake()->unique()->safeEmail(),
+                'password' => bcrypt('12345678!@'),
                 'phone_number' => fake()->phoneNumber(),
                 'image' => null,
             ]);
