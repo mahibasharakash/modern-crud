@@ -1,6 +1,9 @@
 <template>
 
     <form @submit.prevent="loginApi()" class="w-full">
+        <div class="mb-3 w-full bg-red-100 text-center text-red-500 text-[12px] min-h-[45px] max-h-[45px] rounded-lg flex justify-center items-center font-semibold" v-if="credential">
+            Invalid credential
+        </div>
         <div class="w-full block mb-3">
             <label for="email" class="block mb-1 w-full font-medium text-[14px]"> Email </label>
             <input id="email" type="email" name="email" v-model="formData.email" class="font-medium text-[14px] outline-0 px-4 duration-500 min-h-[45px] max-h-[45px] w-full border border-gray-200 focus-within:ring-2 focus-within:ring-blue-400 rounded-lg bg-gray-200" autocomplete="off" />
@@ -52,6 +55,7 @@ export default {
             },
             error: {},
             loading: false,
+            credential: null,
         }
     },
     mounted() {
@@ -67,7 +71,11 @@ export default {
                 this.formData = { email: '', password: '' };
                 this.$router.push({name: 'details'});
             } catch (error) {
-                this.error = error.response.data.errors
+                if(error?.response?.data.credential) {
+                    this.credential = error?.response?.data.credential
+                } else {
+                    this.error = error?.response?.data?.errors
+                }
             } finally {
                 this.loading = false;
             }
